@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Rachael, VIP Portal, October</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Nunito+Sans:ital,wght@0,300..800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1F2528;
+  --ink-soft:#35505A;
+  --paper:#F7F4EE;
+  --card:#FFFEFB;
+  --gold:#C99628;
+  --gold-deep:#83600F;
+  --gold-wash:#F5EAD0;
+  --rose:#FBE4D8;
+  --rose-deep:#C0541F;
+  --euca:#5E6630;
+  --euca-wash:#ECEDDD;
+  --line:#E4DED2;
+  --body:#363D41;
+  --muted:#6F7577;
+  --disp:"Cormorant","Cormorant Garamond",Georgia,serif;
+  --ui:"Avenir Next","Avenir","Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --script:"Pinyon Script","Snell Roundhand",cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;overscroll-behavior-y:none}
+body{
+  overscroll-behavior-y:none;
+  touch-action:manipulation;
+  font-family:var(--ui);
+  background:var(--paper);
+  color:var(--body);
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+
+/* ---------- shell ---------- */
+.shell{display:flex;min-height:100vh;max-width:1150px;margin:0 auto;padding:20px 20px 0;gap:26px}
+.side{
+  display:flex;flex-direction:column;
+  width:264px;flex-shrink:0;
+  background:var(--ink);
+  color:#DCE8E8;
+  padding:34px 0 28px;
+  position:sticky;top:20px;height:calc(100vh - 40px);overflow-y:auto;
+  border-radius:16px;
+  box-shadow:0 18px 44px rgba(12,77,89,.22);
+}
+.side::-webkit-scrollbar{width:0}
+.brand{padding:0 28px 22px;border-bottom:1px solid rgba(255,255,255,.08)}
+
+.brand h1{
+  font-family:var(--disp);font-weight:500;font-size:21px;color:#fff;
+  letter-spacing:.01em;margin-top:10px;
+}
+.brand .vip{
+  display:inline-block;margin-top:9px;
+  font-size:11.5px;letter-spacing:.14em;color:var(--gold);
+  border:1px solid rgba(201,150,40,.55);border-radius:2px;
+  padding:3px 9px;
+}
+.nav{padding:16px 14px;display:flex;flex-direction:column;gap:2px}
+.nav button{
+  display:flex;align-items:center;gap:11px;width:100%;
+  background:none;border:none;color:#B9D0D1;cursor:pointer;
+  font-family:var(--ui);font-size:14.5px;text-align:left;
+  padding:10px 14px;border-radius:6px;line-height:1.35;
+  transition:background .15s,color .15s;
+}
+.nav button .g{font-family:var(--disp);color:var(--gold);font-size:15px;width:16px;flex-shrink:0;text-align:center}
+.nav button:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav button.on{background:rgba(201,150,40,.16);color:#fff}
+.nav button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.nav .tick{margin-left:auto;font-size:12px;color:var(--euca-wash);opacity:0;transition:opacity .2s}
+.nav .tick.done{opacity:.9;color:#C99628}
+.side-foot{margin-top:auto;padding:20px 28px 0;font-size:12.5px;color:#93B3B5;border-top:1px solid rgba(255,255,255,.08)}
+.side-foot b{color:#DCE8E8;font-weight:600}
+
+/* mobile tab strip */
+.mbar{display:none}
+@media (max-width:880px){
+  .shell{display:block;max-width:none;padding:0;gap:0}
+  .side{display:none}
+  .mbar{
+    display:block;position:sticky;top:0;z-index:40;
+    background:var(--ink);padding:12px 0 0;
+  }
+  .mbar .mtitle{
+    color:#fff;font-family:var(--disp);font-size:17px;
+    padding:0 18px 10px;display:flex;align-items:baseline;gap:8px;
+  }
+  .mbar .mtitle span{color:var(--gold);font-size:12px;font-family:var(--ui);letter-spacing:.12em}
+  .mdd{position:relative;padding:0 14px 12px}
+  .mdd-btn{
+    width:100%;display:flex;align-items:center;gap:10px;
+    background:rgba(255,255,255,.09);border:1px solid rgba(201,150,40,.45);
+    color:#fff;font-family:var(--ui);font-size:15px;font-weight:600;
+    padding:11px 15px;border-radius:9px;cursor:pointer;text-align:left;
+  }
+  .mdd-btn .mdd-g{font-family:var(--disp);color:var(--gold);font-size:15px}
+  .mdd-btn .mdd-caret{margin-left:auto;color:var(--gold);font-size:13px;transition:transform .2s}
+  .mdd.open .mdd-btn .mdd-caret{transform:rotate(180deg)}
+  .mdd-list{
+    display:none;position:absolute;left:14px;right:14px;top:calc(100% - 4px);z-index:60;
+    background:var(--ink);border:1px solid rgba(201,150,40,.45);border-radius:10px;
+    padding:6px;box-shadow:0 14px 34px rgba(6,40,46,.5);
+    max-height:60vh;overflow-y:auto;
+  }
+  .mdd.open .mdd-list{display:block}
+  .mdd-list button{
+    display:flex;align-items:center;gap:11px;width:100%;
+    background:none;border:none;color:#C7DCDD;cursor:pointer;text-align:left;
+    font-family:var(--ui);font-size:14.5px;padding:11px 12px;border-radius:7px;
+  }
+  .mdd-list button .g{font-family:var(--disp);color:var(--gold);width:16px;text-align:center}
+  .mdd-list button.on{background:rgba(201,150,40,.18);color:#fff;font-weight:600}
+}
+
+/* ---------- main column ---------- */
+.main{flex:1;min-width:0}
+.wrap{max-width:740px;margin:0 auto;padding:40px 34px 90px}
+@media (max-width:880px){.wrap{padding:30px 20px 70px}}
+.view{display:none}
+.view.on{display:block;animation:vin .35s ease}
+@keyframes vin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- type ---------- */
+.kicker{
+  font-size:13px;letter-spacing:.16em;color:var(--gold-deep);
+  margin-bottom:12px;font-weight:600;
+}
+h2.title{
+  font-family:var(--disp);font-weight:500;font-size:clamp(34px,5vw,46px);
+  color:var(--ink);line-height:1.12;letter-spacing:-.01em;margin-bottom:14px;
+}
+h2.title em{font-style:italic;font-weight:500;color:var(--gold-deep)}
+.lede{font-size:17.5px;color:var(--ink-soft);max-width:60ch;margin-bottom:8px}
+h3.sec{
+  font-family:var(--disp);font-weight:600;font-size:22px;color:var(--ink);
+  margin:38px 0 10px;
+}
+p.b{margin:0 0 14px;max-width:64ch}
+p.b b{color:var(--ink);font-weight:600}
+.whisper{
+  font-family:var(--disp);font-style:italic;font-weight:500;
+  font-size:20px;color:var(--gold-deep);line-height:1.5;
+  border-left:2px solid var(--gold);padding:6px 0 6px 20px;margin:24px 0;
+  max-width:56ch;
+}
+
+/* ---------- cards & panels ---------- */
+.panel{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:24px 26px;margin:18px 0;
+}
+.panel.goldline{border-color:rgba(201,150,40,.5);background:linear-gradient(180deg,#FFFDF9,#F8EEDA)}
+.panel.inkpanel{background:var(--ink);color:#E3EEEE;border-color:var(--ink)}
+.panel.inkpanel h4{color:#fff}
+.pill{
+  display:inline-block;font-size:12.5px;letter-spacing:.08em;
+  background:var(--gold-wash);color:var(--gold-deep);
+  border-radius:20px;padding:4px 12px;font-weight:600;margin-bottom:10px;
+}
+.pill.sage{background:var(--euca-wash);color:var(--euca)}
+.pill.rosep{background:var(--rose);color:#C0541F}
+
+/* facts row (design tab) */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 16px 14px}
+.fact .fl{font-size:12px;letter-spacing:.1em;color:var(--muted);margin-bottom:5px}
+.fact .fv{font-family:var(--disp);font-size:18.5px;font-weight:600;color:var(--ink);line-height:1.25}
+.fact .fs{font-size:13px;color:var(--muted);margin-top:4px}
+
+/* accordions */
+details.acc{border:1px solid var(--line);border-radius:9px;background:var(--card);margin:0 0 10px}
+details.acc summary{
+  cursor:pointer;list-style:none;display:flex;align-items:center;gap:12px;
+  padding:15px 18px;font-weight:600;color:var(--ink);font-size:15.5px;
+}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary .ag{font-family:var(--disp);color:var(--gold);flex-shrink:0}
+details.acc summary .caret{margin-left:auto;color:var(--muted);transition:transform .2s;font-size:13px}
+details.acc[open] summary .caret{transform:rotate(90deg)}
+details.acc .acc-body{padding:2px 18px 16px;color:var(--body)}
+details.acc .acc-body p{margin:0 0 12px;max-width:62ch}
+details.acc .acc-body p:last-child{margin-bottom:0}
+
+/* ---------- tasks ---------- */
+.progress-shell{margin:22px 0 6px}
+.progress-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.progress-top .pt-l{font-weight:600;color:var(--ink);font-size:15px}
+.progress-top .pt-r{font-size:13.5px;color:var(--muted)}
+.pbar{height:8px;border-radius:6px;background:#E9E2D2;overflow:hidden}
+.pbar .fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-deep));border-radius:6px;transition:width .45s ease}
+.week{margin:26px 0 8px}
+.week h4{
+  font-family:var(--disp);font-size:18px;font-weight:600;color:var(--ink);
+  display:flex;align-items:baseline;gap:10px;margin-bottom:4px;
+}
+.week h4 .wd{font-family:var(--ui);font-size:13px;color:var(--muted);font-weight:400}
+.week .wnote{font-size:14px;color:var(--muted);margin-bottom:10px;max-width:60ch}
+.task{
+  display:flex;gap:13px;align-items:flex-start;
+  background:var(--card);border:1px solid var(--line);border-radius:9px;
+  padding:13px 16px;margin-bottom:8px;cursor:pointer;
+  transition:border-color .15s,background .15s;
+}
+.task:hover{border-color:var(--gold)}
+.task .box{
+  width:21px;height:21px;border-radius:6px;border:1.6px solid var(--rose-deep);
+  flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:12px;transition:background .15s,border-color .15s;
+}
+.task.done{background:var(--euca-wash);border-color:var(--euca-wash)}
+.task.done .box{background:var(--euca);border-color:var(--euca)}
+.task.done .tt{color:var(--euca);text-decoration:line-through;text-decoration-thickness:1px}
+.task .tt{font-size:15px;color:var(--ink);font-weight:500;line-height:1.45}
+.task .ts{font-size:13.5px;color:var(--muted);margin-top:2px;line-height:1.5}
+.mine{margin-top:8px}
+.mine li{margin:0 0 7px 18px;font-size:14.5px}
+
+/* ---------- journals / inputs ---------- */
+textarea.jr{
+  width:100%;min-height:120px;resize:vertical;
+  font-family:var(--ui);font-size:15px;line-height:1.6;color:var(--ink);
+  background:var(--card);border:1px solid var(--line);border-radius:9px;
+  padding:14px 16px;
+}
+textarea.jr:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+.savestate{font-size:12.5px;color:var(--muted);margin-top:6px;min-height:16px}
+input.qin{
+  width:100%;font-family:var(--ui);font-size:15px;color:var(--ink);
+  background:var(--card);border:1px solid var(--line);border-radius:9px;
+  padding:12px 15px;
+}
+input.qin:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.btn{
+  font-family:var(--ui);font-size:14.5px;font-weight:600;cursor:pointer;
+  border-radius:8px;padding:10px 18px;border:1.5px solid var(--ink);
+  background:var(--ink);color:#fff;transition:opacity .15s,transform .1s;
+}
+.btn:hover{opacity:.88}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.goldb{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+.btn.sageb{background:var(--euca);border-color:var(--euca)}
+.btn.roseb{background:transparent;border-color:var(--rose-deep);color:#C0541F}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.loglist{margin-top:16px}
+.logitem{
+  display:flex;gap:12px;align-items:flex-start;
+  border-bottom:1px solid var(--line);padding:10px 2px;font-size:14.5px;
+}
+.logitem .when{flex-shrink:0;color:var(--muted);font-size:12.5px;width:74px;padding-top:2px}
+.logitem .what{color:var(--ink)}
+.logitem .ans{font-weight:700}
+.ans.yes{color:var(--euca)} .ans.no{color:#C0541F} .ans.flat{color:var(--muted)}
+.empty{font-size:14px;color:var(--muted);font-style:italic;margin-top:10px}
+
+/* wave buttons */
+.wavegrid{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.wavegrid button{
+  flex:1;min-width:96px;background:var(--card);border:1.5px solid var(--line);
+  border-radius:9px;padding:12px 8px;cursor:pointer;font-family:var(--ui);
+  font-size:14px;color:var(--ink);font-weight:600;transition:border-color .15s,background .15s;
+}
+.wavegrid button span{display:block;font-family:var(--disp);font-size:19px;margin-bottom:3px;color:var(--gold-deep)}
+.wavegrid button:hover{border-color:var(--gold)}
+.wavegrid button.sel{background:var(--gold-wash);border-color:var(--gold)}
+
+/* ---------- ideas & tapping ---------- */
+.idea{
+  border:1px solid var(--line);border-radius:9px;background:var(--card);
+  padding:14px 16px;margin-bottom:9px;
+}
+.idea .it{font-size:15px;color:var(--ink);font-weight:500;line-height:1.5}
+.idea.released .it{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px;font-weight:400}
+.idea .imeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px;font-size:12.5px;color:var(--muted)}
+.idea .ibadge{font-weight:700;font-size:12.5px}
+.idea .ibadge.keep{color:var(--gold-deep)}
+.idea .ibadge.rest{color:var(--rose-deep);font-style:italic;font-weight:500}
+.idea .ibtn{
+  font-family:var(--ui);font-size:12.5px;font-weight:600;cursor:pointer;
+  border-radius:6px;padding:5px 11px;border:1.3px solid var(--line);background:#fff;color:var(--ink);
+}
+.idea .ibtn:hover{border-color:var(--gold)}
+.idea .ibtn.undo{border:none;background:none;color:var(--muted);text-decoration:underline;padding:5px 2px}
+.tapscript{margin-bottom:26px}
+.setupline{
+  background:var(--gold-wash);border:1px solid rgba(201,150,40,.4);border-radius:9px;
+  padding:14px 17px;font-family:var(--disp);font-style:italic;font-size:16.5px;
+  color:var(--gold-deep);line-height:1.55;margin:10px 0 12px;
+}
+.setupline b{font-family:var(--ui);font-style:normal;font-size:12px;letter-spacing:.1em;color:var(--gold-deep);display:block;margin-bottom:5px}
+.tapline{display:flex;gap:12px;padding:7px 2px;border-bottom:1px solid var(--line);font-size:14.5px}
+.tapline:last-child{border-bottom:none}
+.tapline .pt{flex-shrink:0;width:106px;font-size:12px;letter-spacing:.05em;color:var(--gold-deep);font-weight:700;padding-top:2px}
+.tapline .tx{color:var(--ink)}
+details.acc.script{border-color:rgba(201,150,40,.5);margin-bottom:14px}
+details.acc.script > summary{font-family:var(--disp);font-size:18.5px;font-weight:600;padding:17px 19px}
+details.acc.script > .acc-body{padding:4px 19px 18px}
+.roundfocus{
+  font-size:14px;color:#5A3A24;background:#FCEEE5;border-radius:8px;
+  padding:11px 14px;margin-bottom:12px;line-height:1.55;
+}
+.roundfocus b{font-size:11.5px;letter-spacing:.12em;color:#C0541F;display:block;margin-bottom:3px}
+.suds{margin:16px 0 6px}
+.suds-l{font-size:14.5px;font-weight:600;color:var(--ink)}
+.suds-nums{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+.suds-nums button{
+  width:35px;height:35px;border-radius:8px;border:1.4px solid var(--line);
+  background:#fff;font-family:var(--ui);font-size:14px;font-weight:600;color:var(--ink);cursor:pointer;
+  transition:background .12s,border-color .12s;
+}
+.suds-nums button:hover{border-color:var(--gold)}
+.suds-nums button.sel{background:var(--ink);border-color:var(--ink);color:#fff}
+.suds-delta{font-size:14px;color:var(--euca);font-weight:600;margin-top:10px;min-height:18px}
+.pacer{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0 4px}
+.pacer .psmall{padding:8px 15px;font-size:13.5px}
+.pchip{
+  border:1.3px solid var(--line);background:#fff;border-radius:20px;
+  padding:6px 13px;font-size:12.5px;font-weight:600;color:var(--ink);
+  cursor:pointer;font-family:var(--ui);transition:border-color .12s;
+}
+.pchip:hover{border-color:var(--gold)}
+.plabel{font-size:12.5px;color:var(--muted)}
+/* ---------- misc ---------- */
+.next-call{
+  display:flex;gap:16px;align-items:center;
+  background:var(--ink);color:#E3EEEE;border-radius:12px;padding:20px 24px;margin:22px 0;
+}
+.next-call .cg{font-family:var(--disp);font-size:30px;color:var(--gold);flex-shrink:0}
+.next-call b{color:#fff}
+.next-call .ncs{font-size:13.5px;color:#A9C6C8;margin-top:2px}
+.footer{
+  margin-top:60px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:13.5px;color:var(--muted);
+}
+.footer .sig{font-family:var(--disp);font-style:italic;font-size:17px;color:var(--gold-deep);margin-bottom:4px}
+.storenote{font-size:12.5px;color:var(--muted);margin-top:14px}
+
+/* ---------- portal additions ---------- */
+.side{position:sticky}
+.brand{position:relative}
+.bemark{width:54px;height:54px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:21px;font-weight:600;letter-spacing:.06em;color:var(--gold)}
+.brand h1{font-size:25px;font-weight:600}
+.nav,.side-foot{position:relative}
+.side-foot{font-family:var(--ui)}
+h3.sec{font-size:25px}
+.whisper{font-size:22px}
+.footer .sig{font-family:var(--script);font-style:normal;font-size:30px;color:var(--rose-deep);font-weight:400}
+.task .box{border-color:var(--gold)}
+.task.done .box{background:var(--rose-deep);border-color:var(--rose-deep)}
+.task.done{background:var(--euca-wash);border-color:var(--euca-wash)}
+.task.done .tt{color:var(--ink-soft)}
+.mine{list-style:none;padding:0}
+.mine li{margin:0 0 10px;padding-left:22px;position:relative;line-height:1.55}
+.mine li::before{content:"✦";position:absolute;left:0;top:1px;color:var(--gold);font-size:12px}
+.decgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:14px 0}
+.dec{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--rose-deep);border-radius:8px;padding:14px 16px}
+.dec .dq{font-family:var(--disp);font-size:19px;font-weight:600;color:var(--ink);line-height:1.25;margin-bottom:4px}
+.dec .da{font-size:14px;color:var(--body);line-height:1.5}
+.ladder{margin:24px 0;position:relative}
+.ladder::before{content:"";position:absolute;left:118px;top:10px;bottom:10px;width:1px;background:linear-gradient(var(--gold),var(--rose-deep))}
+.rung{display:grid;grid-template-columns:104px 1fr;gap:28px;margin-bottom:14px;align-items:start}
+.rl{font-family:var(--disp);font-size:18px;font-weight:600;color:var(--gold-deep);text-align:right;line-height:1.2;padding-top:15px}
+.rl span{display:block;font-family:var(--ui);font-size:11.5px;font-weight:500;color:var(--muted);margin-top:3px}
+.rb{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;position:relative}
+.rb::before{content:"";position:absolute;left:-19px;top:21px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:1.5px solid var(--gold)}
+.rung.hot .rb{border-color:var(--rose-deep);background:linear-gradient(180deg,#FFFDF9,#FDF0E8)}
+.rung.hot .rb::before{background:var(--rose-deep);border-color:var(--rose-deep)}
+.rn{font-family:var(--disp);font-size:21px;font-weight:600;color:var(--ink);line-height:1.2}
+.rd{font-size:14.5px;margin-top:4px;line-height:1.55}
+.newtag{font-family:var(--ui);font-size:11px;font-weight:700;background:var(--rose-deep);color:#fff;border-radius:20px;padding:2px 9px;vertical-align:middle;margin-left:6px}
+@media (max-width:560px){
+  .ladder::before{left:6px}
+  .rung{grid-template-columns:1fr;gap:4px;padding-left:24px}
+  .rl{text-align:left;padding-top:0;font-size:16px}
+  .rl br{display:none}.rl span{display:inline;margin-left:6px}
+  .rb::before{left:-23px}
+}
+.crumbs{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.crumb{flex:1;min-width:120px;background:var(--gold-wash);border-radius:8px;padding:11px 13px;position:relative}
+.crumb b{display:block;color:var(--ink);font-size:14.5px}
+.crumb span{font-size:12.5px;color:var(--muted);line-height:1.4;display:block;margin-top:2px}
+.crumb:last-child{background:var(--rose);}
+ol.steps{margin:6px 0 14px 20px}
+ol.steps li{margin-bottom:6px;padding-left:4px}
+.fact .fl{letter-spacing:.04em}
+.kicker{letter-spacing:.06em}
+body{background:var(--paper)}
+.focus{background:var(--ink);color:#E3EEEE;border-radius:12px;padding:24px 26px;margin:22px 0 8px}
+.focus-h{font-family:var(--disp);font-size:24px;font-weight:600;color:#fff;margin-bottom:6px}
+.focus-lede{font-size:15px;color:#C7DCDD;margin-bottom:14px;max-width:62ch}
+.frow{display:flex;gap:14px;padding:11px 0;border-top:1px solid rgba(201,150,40,.22)}
+.fn{flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1.3px solid var(--gold);color:var(--gold);font-family:var(--disp);font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.frow b{display:block;color:#fff;font-size:15.5px}
+.frow span{display:block;font-size:14px;color:#C7DCDD;line-height:1.55;margin-top:2px}
+.focus-end{margin-top:12px;padding-top:12px;border-top:1px solid rgba(201,150,40,.22);font-size:14.5px;color:#E3EEEE}
+.focus-end b{color:var(--gold)}
+.mine li.doneitem::before{content:"✓";color:var(--rose-deep);font-weight:700}
+.stabs{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 6px;border-bottom:1px solid var(--line)}
+.stab{font-family:var(--ui);font-size:14.5px;font-weight:600;color:var(--muted);background:none;border:0;border-bottom:2px solid transparent;padding:10px 14px;margin-bottom:-1px;cursor:pointer}
+.stab:hover{color:var(--ink)}
+.stab.on{color:var(--rose-deep);border-bottom-color:var(--rose-deep)}
+.stab:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+.subview{display:none}.subview.on{display:block}
+.lrow{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line);line-height:1.55;font-size:15px}
+.lrow:first-child{border-top:0}
+.ln{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--gold-wash);color:var(--gold-deep);font-weight:700;font-size:12.5px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.lrow b{color:var(--ink)}
+.dec.okdec{border-left-color:var(--gold)}
+.dec.nodec{border-left-color:var(--muted)}
+.dec .dq .newtag{font-size:10.5px}
+.fpath{display:flex;align-items:stretch;gap:0}
+.fp-step{flex:1;min-width:0;background:var(--gold-wash);border:1px solid rgba(201,150,40,.45);border-radius:10px;padding:12px 12px 13px;display:flex;flex-direction:column}
+.fp-step.fp-end{background:var(--rose);border-color:rgba(178,34,52,.35)}
+.fp-n{width:24px;height:24px;border-radius:50%;background:var(--card);border:1.3px solid var(--gold);color:var(--gold-deep);font-family:var(--disp);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.fp-end .fp-n{border-color:var(--rose-deep);color:var(--rose-deep)}
+.fp-step b{display:block;color:var(--ink);font-size:14.5px;line-height:1.3}
+.fp-d{display:block;font-size:12.5px;color:var(--muted);line-height:1.4;margin-top:3px}
+.fp-arrow{flex:0 0 26px;display:flex;align-items:center;justify-content:center}
+.fp-arrow svg{width:20px;height:20px;fill:none;stroke:var(--gold-deep);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:700px){
+  .fpath{flex-direction:column}
+  .fp-step{flex-direction:row;flex-wrap:wrap;align-items:center;gap:0 10px}
+  .fp-n{margin-bottom:0}
+  .fp-step b{flex:1}
+  .fp-d{flex-basis:100%;padding-left:34px}
+  .fp-arrow{flex:0 0 30px}
+  .fp-arrow svg{transform:rotate(90deg)}
+}
+.tree{font-size:15px;line-height:1.55}
+.tree .tf{font-weight:700;color:var(--ink)}
+.tree .tn{font-weight:400;color:var(--muted);font-size:13.5px;margin-left:6px}
+.tree ul{list-style:none;margin:6px 0 8px 6px;padding-left:16px;border-left:1px solid var(--gold)}
+.tree li{margin:5px 0;color:var(--body)}
+.why{display:inline-block;margin-left:6px;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--gold-deep);background:var(--gold-wash);border-radius:20px;padding:1px 9px;vertical-align:1px}
+
+/* ---------- Rachael overrides ---------- */
+:root{--peacock:#0C4D59;--peacock-deep:#083A43;--olive:#6B7435;--persimmon:#E76834}
+.side{background:var(--peacock)}
+.mbar,.mdd-list{background:var(--peacock)}
+.focus,.next-call,.panel.inkpanel{background:var(--peacock)}
+.btn{background:var(--peacock);border-color:var(--peacock)}
+.btn.ghost{background:transparent;color:var(--peacock);border-color:var(--peacock)}
+.btn.goldb{background:var(--gold);border-color:var(--gold);color:#1F2528}
+.btn.sageb{background:var(--olive);border-color:var(--olive);color:#fff}
+.suds-nums button.sel{background:var(--peacock);border-color:var(--peacock)}
+.bemark{border-color:var(--gold);color:#F3E3BC;font-style:italic;font-weight:500;letter-spacing:.02em}
+.footer .sig{font-family:var(--disp);font-style:italic;font-weight:500;font-size:28px;color:var(--peacock)}
+.task.done .box{background:var(--olive);border-color:var(--olive)}
+.mine li.doneitem::before{color:var(--olive)}
+.stab.on{color:var(--peacock);border-bottom-color:var(--persimmon)}
+.fp-step.fp-end{background:var(--rose);border-color:rgba(231,104,52,.4)}
+.crumb:last-child{background:var(--rose)}
+/* brush stroke: the one painterly moment */
+.brushwrap{position:relative;display:inline-block}
+.brush{position:absolute;left:-2%;bottom:.02em;width:104%;height:.42em;z-index:-1;pointer-events:none}
+.brush path{fill:var(--persimmon);opacity:.4}
+.view{position:relative;z-index:0}
+.side .swatch{display:flex;gap:5px;margin-top:14px}
+.side .swatch i{display:block;width:22px;height:6px;border-radius:6px 2px 6px 2px}
+.optcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:14px 0;border-top:3px solid var(--gold)}
+.optcard.b{border-top-color:var(--persimmon)}
+.optcard.c{border-top-color:var(--olive)}
+.optcard .on{font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:.04em}
+.optcard .oline{font-family:var(--disp);font-size:24px;font-weight:600;color:var(--ink);line-height:1.25;margin:6px 0 10px}
+.optcard .orow{font-size:14.5px;margin:6px 0;max-width:64ch}
+.optcard .orow b{color:var(--ink)}
+
+:root{box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (max-width:880px){.mbar{padding-top:calc(12px + env(safe-area-inset-top,0px))}}
+</style>
+</head>
+<body>
+<div class="mbar">
+  <div class="mtitle">Rachael's Portal <span>VIP October</span></div>
+  <div class="mdd">
+    <button type="button" class="mdd-btn" id="mdd-btn" aria-haspopup="listbox" aria-expanded="false">
+      <span class="mdd-g" id="mdd-g">✦</span><span id="mdd-label">Welcome</span><span class="mdd-caret">▾</span>
+    </button>
+    <div class="mdd-list" id="mdd-list" role="listbox"></div>
+  </div>
+</div>
+<div class="shell">
+<aside class="side">
+  <div class="brand">
+    <div class="bemark" aria-hidden="true">RM</div>
+    <h1>Rachael's Portal</h1>
+    <span class="vip">VIP, October 2026</span>
+    <div class="swatch" aria-hidden="true"><i style="background:#E76834"></i><i style="background:#C99628"></i><i style="background:#6B7435"></i><i style="background:#F7F4EE"></i></div>
+  </div>
+  <nav class="nav" id="nav"></nav>
+  <div class="side-foot">Held by <b>Aurailia</b><br>A different way of seeing.</div>
+</aside>
+
+<main class="main"><div class="wrap">
+
+<!-- ================= WELCOME ================= -->
+<section class="view" id="v-welcome">
+  <div class="kicker">Welcome, Rachael</div>
+  <h2 class="title">Your room for <span class="brushwrap">October.<svg class="brush" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M6 24 C 60 10, 130 8, 200 14 S 330 22, 396 12 L 392 30 C 320 36, 240 30, 170 32 S 50 38, 8 34 Z"/></svg></span></h2>
+  <p class="lede">This is your VIP portal. Everything from our October call lives here now: what we decided, what you're doing, what I'm doing, and the pieces that are new to you. It fills in after every monthly call, so nothing has to live in your head or a lost email.</p>
+
+  <div class="next-call">
+    <div class="cg">✦</div>
+    <div>
+      <b>October 7 to November 6: build the front door</b>
+      <div class="ncs">Your website is live for the conference, you gather what you already have, and we choose the doorway your community opens through.</div>
+    </div>
+  </div>
+
+  <h3 class="sec">A note from me</h3>
+  <p class="b">Rachael, this was a big-picture call, and I think we found the thread that pulls everything together. You came in full: a training, a conference, clients, the workshop, the website, and a lot of ideas pulling in different directions. Momentum on the marketing side keeps slipping away from you. I want to say this first. That isn't a flaw in you. It's what happens when a Manifesting Generator with an open Head and an open Root is trying to carry everything at once without one clear container.</p>
+  <p class="b">So this month has one container. Instead of trying to sell to strangers on social media, which is hard for almost everyone, we build you a warm place for the right people to land. A community. A front door. People come in for one clear thing, they get to feel your work, and from there they move into sessions, your workshop, and the deeper work.</p>
+  <div class="whisper">You're not choosing what you're allowed to do forever. You're choosing which door people walk through first.</div>
+  <p class="b">The timely piece is your conference next week. Your business cards say rachelmaly.com, and your website is now live with a booking button that actually works. Your couples page follows this weekend and your workshop page next week, so people who meet you can get a real feel for your work. Your part this month is small and doesn't ask you to create anything new: set up your booking, gather what you already have into one folder, and choose between the two doorways in Who It's For.</p>
+  <p class="b">Start with the October Plan, and tap each task when it's done.</p>
+
+  <h3 class="sec">How this portal works</h3>
+  <div class="panel goldline">
+    <p class="b" style="margin-bottom:10px"><b>It fills in as we go.</b> After each monthly call, the recap and the plan land here. Next month's will sit alongside this one, so you can always look back.</p>
+    <p class="b" style="margin-bottom:10px"><b>The tools are yours.</b> Check In, Idea Log, Tapping and the Wins Ledger save privately in this browser. If you open the portal on a different device, your notes won't follow, so pick one device and keep it there.</p>
+    <p class="b" style="margin-bottom:0"><b>Between calls,</b> Voxer me. A screen recording of whatever's confusing you in Wix is the fastest way for me to help.</p>
+  </div>
+</section>
+
+<!-- ================= CALL RECAP ================= -->
+<section class="view" id="v-recap">
+  <div class="kicker">Our October 7 call</div>
+  <h2 class="title">What we covered.</h2>
+  <p class="lede">The short version of our call, so you don't have to remember it all. Open any section for the details.</p>
+
+  <details class="acc" open>
+    <summary><span class="ag">✦</span>Where you are right now<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>You're stretched. A training, a conference next week, a full client load, and a business that's halfway between two versions of itself. You told me you keep starting on the marketing and then losing the thread. That makes complete sense. There's no single place for your energy to go yet, so it scatters.</p>
+      <p>This month isn't about doing more. It's about giving everything one place to point.</p>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="ag">✦</span>The shift: build the front door<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>We named the hard truth. It's really tough to get strangers on social media to hire a therapist they've never met. That isn't a you problem. It's true for nearly everyone doing deep work.</p>
+      <p>So instead of pushing uphill, we build a community that acts as the doorway in. A niched, low-barrier space with a free gift to welcome people, where they gather, get a taste of how you work, and come to trust you. From there, sessions, your workshop and your higher-ticket work become a natural next step, not a cold pitch. Over time it can hold free practices, monthly online workshops, and recurring income that isn't tied to your session hours.</p>
+      <p>Your community lives on your Workshops &amp; Retreats side, not your clinical side. It's education and experience. Therapy still happens through the consultation and your therapy pages, exactly as we set up the website.</p>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="ag">✦</span>Getting clear on who it's for<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>A lot of our call was this. We kept circling one thing that lit you up: using art to help people reconnect. With a partner, with their kids, with themselves. Art as the method and the mirror, the thing that lets someone step outside a pattern they've been stuck in and finally see it.</p>
+      <p>We also talked about narrowing even further, toward couples and partnership, and about the woman who is too worn out to connect with anyone. Those became your two doorways: couples who keep having the same fight, and the woman running on empty. They're in the Who It's For tab now, each with two community names. Read them out loud and notice which one your body leans toward.</p>
+      <p>Niching isn't about limiting you. Once people are inside, you can still help them with everything you carry. The niche is just the sign on the door, so the right person knows it's for her.</p>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="ag">✦</span>Clarity comes from moving<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>You're a 3/6. Your 3rd line learns by doing, by trying something, seeing what fits and what doesn't, and building real wisdom from that. Waiting until you feel certain before you move won't work for your design. The certainty arrives after you start.</p>
+      <p>It was the same for me. Things got clear once I started moving, not before. So pick a doorway, open it, and let the doing show you what to adjust.</p>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="ag">✦</span>Going live for your conference<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>Your business cards say rachelmaly.com, so we made the website live with a book-a-call button that works, so people who meet you at the conference land somewhere real and beautiful. Update since our call: the booking link is fixed and working.</p>
+      <p>Next on my side: your automated booking emails, your couples page this weekend, and your workshop page next week. I'm also shaping the site's words to match what we talked about on this call. Your part: sync your Google Calendar in Wix, set your working hours, then test the link and tell me how it felt as a client.</p>
+      <p>Nothing else on your Wix site takes payment yet. The only paid piece coming is your workshop.</p>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="ag">✦</span>Gather, don't create<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>Your homework is gentle on purpose. Make one folder on your desktop and start dropping in what you already have: trainings and workshops you've taught, meditations, art therapy directives and practices, handouts.</p>
+      <p>You already have so much. We're not making anything new this month. We're gathering, so we have what we need to fill your community and make a free gift that draws people in. The Your Front Door tab shows how to sort it.</p>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="ag">✦</span>Your December workshop<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>Getting the Love You Want stays a parallel track. It's the first weekend of December, in person and co-led, at $750 a couple, with a payment plan, $100 off for early birds through the end of October, and a one-on-one check-in call afterward.</p>
+      <p>You need couples in the room so you can film it for your certification. The easiest way to fill it is to invite a few of your current couples in at a special price. A warm, personal note will do more than any post.</p>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="ag">✦</span>What can wait<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>The rest of the website (intensives, the methods page, Workshops &amp; Retreats, About) keeps moving on my side, but none of it needs you this month. YouTube is still your long-term home, and it waits until the community has a front door to send people to. The art gallery and shop wait until the main site is done.</p>
+      <p>If one of these pulls at you anyway, catch it in your Idea Log and ask your gut about it tomorrow.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ================= PLAN ================= -->
+<section class="view" id="v-plan">
+  <div class="kicker">The plan</div>
+  <h2 class="title">October 7 to November 6.</h2>
+  <p class="lede">Four short weeks. Before you start any task, ask your gut if today is the day for it. If it's a flat no, skip it and come back. Nothing here needs to happen on a day your body says no.</p>
+
+  <div class="focus">
+    <div class="focus-h">Our focus for October</div>
+    <p class="focus-lede">Everything below serves one goal: a front door that's ready to open, so the right people can find you without you chasing strangers.</p>
+    <div class="frow"><div class="fn">1</div><div><b>Go live for the conference</b><span>Your website is live with a booking button that works. Couples page this weekend, workshop page next week.</span></div></div>
+    <div class="frow"><div class="fn">2</div><div><b>Gather what you already have</b><span>One desktop folder with your trainings, meditations and art practices. No creating, just collecting.</span></div></div>
+    <div class="frow"><div class="fn">3</div><div><b>Choose your doorway</b><span>Choose between your two doorways and a community name, then pick the free gift your community opens with.</span></div></div>
+    <div class="frow"><div class="fn">4</div><div><b>Fill the December room</b><span>Personal invitations to a few current couples, so you have who you need to film for your certification.</span></div></div>
+    <p class="focus-end"><b>By November 6:</b> your homepage is live, your folder is full, you've chosen your doorway and your free gift, and invitations to the workshop are out.</p>
+  </div>
+
+  <div class="progress-shell">
+    <div class="progress-top"><span class="pt-l">Your progress</span><span class="pt-r" id="prog-txt">0 of 0 done</span></div>
+    <div class="pbar"><div class="fill" id="prog-fill"></div></div>
+  </div>
+
+  <div class="week">
+    <h4>Week one: ready for the conference <span class="wd">Oct 7 to 13</span></h4>
+    <div class="wnote">A few small Wix pieces so people who meet you next week can actually book. Twenty minutes, maybe thirty.</div>
+    <div id="tasks-o1"></div>
+  </div>
+
+  <div class="week">
+    <h4>Week two: gather, don't create <span class="wd">Oct 14 to 20</span></h4>
+    <div class="wnote">Drop things in as you come across them. A few minutes here and there is plenty.</div>
+    <div id="tasks-o2"></div>
+  </div>
+
+  <div class="week">
+    <h4>Week three: fill the room <span class="wd">Oct 21 to 27</span></h4>
+    <div class="wnote">The early bird ends October 31, which gives your invitations a real reason to go out this week.</div>
+    <div id="tasks-o3"></div>
+  </div>
+
+  <div class="week">
+    <h4>Week four: shape the front door <span class="wd">Oct 28 to Nov 6</span></h4>
+    <div class="wnote">Now you have something to respond to. Let your gut choose from what's already in your folder.</div>
+    <div id="tasks-o4"></div>
+  </div>
+
+  <h3 class="sec">What I'm taking off your plate</h3>
+  <div class="panel goldline">
+    <span class="pill">AURAILIA</span>
+    <ul class="mine">
+      <li class="doneitem"><b>Your website, live with a working booking link. Done.</b> Ready for your business cards at the conference.</li>
+      <li><b>Your automated booking emails,</b> updated October 8, so everyone who books gets a warm confirmation and a clear next step.</li>
+      <li><b>Your couples page,</b> ready this weekend.</li>
+      <li><b>Your workshop page,</b> ready next week, with the December date, $750 a couple, the payment plan, the early bird and the after-event check-in, so people can get a feel for the weekend and sign up.</li>
+      <li><b>Your website words,</b> reworked to match what we talked about on this call.</li>
+      <li><b>Your site icon and share image,</b> so your tab and your shared links look like you.</li>
+      <li class="doneitem"><b>Your niche options. Done.</b> Two doorways, each with two community names, written out in the Who It's For tab.</li>
+      <li class="doneitem"><b>A first sketch of your community. Done.</b> What goes where, what goes in your folder, and free gift ideas. It's in Your Front Door.</li>
+      <li><b>Your Intensives page,</b> built from the individual therapy page we already made.</li>
+      <li><b>Your email list into Wix,</b> as soon as you send me the spreadsheet.</li>
+      <li><b>Shaping your free gift</b> once your folder has a few things in it.</li>
+      <li><b>Any Wix changes.</b> Send me what you want changed and I'll go in and do it.</li>
+    </ul>
+  </div>
+
+  <h3 class="sec">Decisions only you can make</h3>
+  <p class="b">Say each one out loud as a yes or no question and follow the first sound your body makes. That "mm-hmm" or "uh-uh" is your Sacral. Log it in Check In if you want a record.</p>
+  <div class="decgrid">
+    <div class="dec"><div class="dq">Your doorway</div><div class="da">Couples who keep having the same fight, or the woman running on empty? Read both out loud in Who It's For before you decide.</div></div>
+    <div class="dec"><div class="dq">Your free gift</div><div class="da">An art-therapy body scan, a short meditation, or a simple art practice? Choose from what's already in your folder.</div></div>
+    <div class="dec"><div class="dq">Your community name</div><div class="da">Roommates to Partners, The Reconnection Room, Running on Empty, or Too Tired to Love? The two under your doorway are the ones to say out loud.</div></div>
+    <div class="dec"><div class="dq">Where your community lives</div><div class="da">Skool, where you already are with me, or somewhere else? Ask your gut once you've chosen the doorway.</div></div>
+    <div class="dec"><div class="dq">Your special workshop price</div><div class="da">What number feels like a yes for current clients? Enough to honor your work, easy enough to say yes to.</div></div>
+    <div class="dec"><div class="dq">The payment plan</div><div class="da">Three payments of $275 adds up to $825, not $750. Is the plan price $825, or should each payment be $250?</div></div>
+    <div class="dec"><div class="dq">Your one channel</div><div class="da">Instagram to fill the workshop now, with YouTube later? You don't have to be everywhere. One place, consistently.</div></div>
+  </div>
+</section>
+
+<!-- ================= OFFER PATH ================= -->
+<section class="view" id="v-path">
+  <div class="kicker">How it all fits</div>
+  <h2 class="title">Your offer path.</h2>
+  <p class="lede">From the first free gift to your deepest work. Each step gives someone a real taste of you and one clear next step. Nobody gets pushed. Everyone can find the door.</p>
+
+  <div class="ladder">
+    <div class="rung hot">
+      <div class="rl">Free<br><span>building now</span></div>
+      <div class="rb">
+        <div class="rn">Your community and free gift <span class="newtag">new</span></div>
+        <div class="rd">The front door. A welcoming space built around your doorway, opening with one free practice from your folder. Where people gather, feel how you work, and come to trust you.</div>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="rl">Free<br><span>15 minutes</span></div>
+      <div class="rb">
+        <div class="rn">Your consultation</div>
+        <div class="rd">The way into therapy. Booked right from your homepage, with a Zoom link made for each call. Live this month.</div>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="rl">Per session</div>
+      <div class="rb">
+        <div class="rn">Individual and couples therapy</div>
+        <div class="rd">Your clinical work, on its own pages, with fees and booking details kept on your Getting Started page. Ongoing billing stays in Alma.</div>
+      </div>
+    </div>
+    <div class="rung hot">
+      <div class="rl">$750 a couple<br><span>first weekend of December</span></div>
+      <div class="rb">
+        <div class="rn">Getting the Love You Want</div>
+        <div class="rd">Your in-person couples weekend, co-led. Payment plan, $100 off through October 31, and a one-on-one check-in afterward. After the weekend, the page switches to a waitlist for the next one.</div>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="rl">Concentrated<br><span>page coming next</span></div>
+      <div class="rb">
+        <div class="rn">Therapy intensives</div>
+        <div class="rd">Longer, immersive sessions for people ready to go deeper than weekly work allows. Where your energy comes back instead of draining.</div>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="rl">Later<br><span>from your blueprint</span></div>
+      <div class="rb">
+        <div class="rn">Self-led products <span class="newtag" style="background:var(--gold);color:var(--ink)">idea</span></div>
+        <div class="rd">The Unsaid Things audio series and The Relational Reset for couples. Once your community is open, these become a paid step between the free gift and working with you.</div>
+      </div>
+    </div>
+    <div class="rung">
+      <div class="rl">Later<br><span>from your blueprint</span></div>
+      <div class="rb">
+        <div class="rn">Retreats <span class="newtag" style="background:var(--gold);color:var(--ink)">idea</span></div>
+        <div class="rd">Art, nature and the nervous system, held over a few days near Dripping Springs. The community is where your first retreat fills from.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sec">How someone finds you</h3>
+  <div class="panel">
+    <div class="fpath" role="list">
+      <div class="fp-step"><span class="fp-n">1</span><b>A conversation or a post</b><span class="fp-d">at the conference, a client referral, one real story</span></div>
+      <div class="fp-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="fp-step"><span class="fp-n">2</span><b>Your free gift</b><span class="fp-d">one practice that lets her feel your work</span></div>
+      <div class="fp-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="fp-step"><span class="fp-n">3</span><b>Your community</b><span class="fp-d">where she stays, learns and trusts you</span></div>
+      <div class="fp-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="fp-step"><span class="fp-n">4</span><b>A consultation</b><span class="fp-d">when she's ready for more</span></div>
+      <div class="fp-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="fp-step fp-end"><span class="fp-n">5</span><b>The deeper work</b><span class="fp-d">therapy, the workshop or an intensive</span></div>
+    </div>
+  </div>
+  <p class="b">This is why the community matters so much. Right now, everything depends on someone deciding to book therapy with a stranger. With a front door, she gets to know you first. By the time she books, she already feels held.</p>
+</section>
+
+<!-- ================= WHO IT'S FOR ================= -->
+<section class="view" id="v-niche">
+  <div class="kicker">Your doorway</div>
+  <h2 class="title">Who it's for.</h2>
+  <p class="lede">We've narrowed it to two doorways. Both start where she is when she goes looking for help, not where she ends up. Read each one out loud and notice what your body does.</p>
+
+  <div class="panel goldline">
+    <span class="pill">THE KEY SHIFT</span>
+    <p class="b" style="margin-bottom:0">She doesn't search for art therapy, Imago or somatic work. She searches "how do I fix my marriage" or "why am I so tired all the time." So your doorway names what she's living right now, in her words. The art, the body and the relational work are what she finds once she's inside, and that's what makes you different.</p>
+  </div>
+
+  <!-- NICHE 1 -->
+  <div class="optcard b">
+    <div class="on">Doorway one: couples who keep having the same fight</div>
+    <div class="oline">"I help couples who love each other but keep having the same fight learn to really hear each other again, and become partners who feel close instead of like two people running a household."</div>
+    <p class="orow"><b>Who she is:</b> a woman who loves her partner, keeps having the same fight, and isn't ready to give up. She's usually the one searching, so she's the one you speak to, but she's looking for help for the two of them.</p>
+    <p class="orow"><b>Speaking to her directly:</b> I help women who are tired of being the only one trying to fix their marriage bring their partner back into the conversation and feel like a team again.</p>
+    <p class="orow"><b>Short version:</b> I help couples stop having the same fight and start feeling close again.</p>
+    <p class="orow"><b>From / to:</b> I help couples go from the same argument on repeat to actually hearing each other and choosing each other again.</p>
+
+    <details class="acc">
+      <summary><span class="ag">✦</span>What she's typing at 2am<span class="caret">›</span></summary>
+      <div class="acc-body"><p>"how to fix my marriage," "how to communicate with my husband without fighting," "we keep having the same argument," "feel like roommates with my husband," "couples workshop Texas."</p></div>
+    </details>
+    <details class="acc">
+      <summary><span class="ag">✦</span>The cost of staying like this<span class="caret">›</span></summary>
+      <div class="acc-body">
+        <ul class="mine">
+          <li>Another year of the same fight, with different words.</li>
+          <li>Small ruptures that never fully repair, until one day you realize you've been coexisting instead of connecting.</li>
+          <li>Your kids learning what love looks like from watching the two of you.</li>
+          <li>Wondering if divorce is the answer when what you really want is the person you fell in love with.</li>
+        </ul>
+      </div>
+    </details>
+
+    <h3 class="sec" style="margin-top:22px">Two community names</h3>
+    <div class="decgrid">
+      <div class="dec"><div class="dq">Roommates to Partners</div><div class="da"><i>For couples who love each other and keep having the same fight.</i><br><br>Focus: going from logistics and distance back to real closeness. The name holds the pain and the fix, so she recognizes herself before she reads another word.</div></div>
+      <div class="dec"><div class="dq">The Reconnection Room</div><div class="da"><i>For the marriage that's drifted into logistics and distance, before it drifts any further.</i><br><br>Focus: a place to practice reconnecting between the hard moments. Wide enough to hold the self work and family work later without changing the name.</div></div>
+    </div>
+
+    <details class="acc">
+      <summary><span class="ag">✦</span>What's inside the community<span class="caret">›</span></summary>
+      <div class="acc-body">
+        <p><b>Free gift:</b> "The Fight Underneath the Fight," a 15-minute art exercise. Each partner draws what the argument feels like, then they share. Simple, unlike anything she's tried, and completely you.</p>
+        <p><b>Inside:</b> a monthly live connection practice, short exercises for the two of you, and Imago-style dialogue prompts. Later, a self track, plus pieces on her kids and her parents.</p>
+        <p><b>Where it leads:</b> your December Getting the Love You Want workshop, The Relational Reset, couples intensives, then retreats.</p>
+      </div>
+    </details>
+    <p class="orow"><b>Why it works:</b> the most urgent, searchable problem, a straight line to your December workshop and your Imago certification, and people already pay for it.</p>
+    <p class="orow"><b>The trade-off:</b> it's a crowded space, so your difference, art and the body and not just communication tools, needs to show up in everything you share.</p>
+  </div>
+
+  <!-- NICHE 2 -->
+  <div class="optcard c">
+    <div class="on">Doorway two: the woman running on empty</div>
+    <div class="oline">"I help women who are so worn out from taking care of everyone that they snap at the people they love and then feel guilty about it, feel like themselves again and become a woman who has something left to give, because she finally gave some to herself."</div>
+    <p class="orow"><b>Who she is:</b> a woman who's overwhelmed, anxious and running on empty. She's short with the people she loves and feels guilty about it, and she's disconnected from her partner, her kids, her parents and herself.</p>
+    <p class="orow"><b>The key point:</b> she doesn't know she needs to come home to herself. So the doorway names what she feels, exhausted, snapping, numb, disconnected, and coming home to herself is what she finds once she's inside.</p>
+    <p class="orow"><b>Short version:</b> I help exhausted women find their way back to themselves, and then back to the people they love.</p>
+    <p class="orow"><b>From / to:</b> I help women go from running on empty and short with everyone to feeling like themselves again and close to their partner and kids.</p>
+
+    <details class="acc">
+      <summary><span class="ag">✦</span>What she's typing at 2am<span class="caret">›</span></summary>
+      <div class="acc-body"><p>"why am I so tired all the time," "feel disconnected from my family," "why do I snap at my kids," "I feel lost and don't know who I am anymore," "how to stop feeling overwhelmed."</p></div>
+    </details>
+    <details class="acc">
+      <summary><span class="ag">✦</span>The cost of staying like this<span class="caret">›</span></summary>
+      <div class="acc-body">
+        <ul class="mine">
+          <li>Snapping at your kids, then lying awake feeling guilty about it.</li>
+          <li>Being the one who holds everyone together, which means nobody ever holds you.</li>
+          <li>A body that carries what you don't process: tight shoulders, shallow sleep, anxiety that feels normal now.</li>
+          <li>Another year of the creative part of you on hold, waiting for life to settle down.</li>
+        </ul>
+      </div>
+    </details>
+
+    <h3 class="sec" style="margin-top:22px">Two community names</h3>
+    <div class="decgrid">
+      <div class="dec okdec"><div class="dq">Running on Empty</div><div class="da"><i>For the woman who takes care of everyone and has nothing left for the people she loves most.</i><br><br>Focus: refilling her first, through short creative and body-based practices that fit a real, busy life. It's the exact phrase she'd use with a friend at 10pm.</div></div>
+      <div class="dec okdec"><div class="dq">Too Tired to Love</div><div class="da"><i>For women who are tired of being short with the people they love, and tired of the guilt that comes after.</i><br><br>Focus: the link between her exhaustion and her relationships. The most natural bridge into your couples work.</div></div>
+    </div>
+
+    <details class="acc">
+      <summary><span class="ag">✦</span>What's inside the community<span class="caret">›</span></summary>
+      <div class="acc-body">
+        <p><b>Free gift:</b> the art-therapy body scan from your folder.</p>
+        <p><b>Inside:</b> 10-minute practices (art, breath, Reiki-style rest), a monthly live creative gathering, and "bring it home" practices for her partner and kids.</p>
+        <p><b>Where it leads:</b> The Unsaid Things, individual intensives, retreats, then couples work once she has her footing.</p>
+      </div>
+    </details>
+    <p class="orow"><b>Why it works:</b> it's closest to your mirror sheet, your art, Reiki and yoga fit naturally, and it's a strong lead-in to retreats.</p>
+    <p class="orow"><b>The trade-off:</b> less urgency. She can live with tired for years, so your content has to name the cost clearly. It also connects less directly to the December workshop.</p>
+  </div>
+
+  <h3 class="sec">How the two lead into each other</h3>
+  <p class="b">Both doorways are the same problem from two sides: disconnection.</p>
+  <div class="panel">
+    <div class="lrow"><span class="ln">1</span><div><b>She comes in for her marriage.</b> She learns she can't stay calm with her partner when she's running on empty, so the self work becomes her next step.</div></div>
+    <div class="lrow"><span class="ln">2</span><div><b>She comes in exhausted.</b> As she fills back up, she has something to give again, and the next question is "how do I bring this home to him?"</div></div>
+  </div>
+  <p class="b">So whichever one you choose as the front door, the other becomes a track inside. You're not giving anything up.</p>
+
+  <h3 class="sec">Side by side</h3>
+  <div class="panel" style="padding:8px 18px">
+    <div class="lrow"><div style="flex:1"><b>Urgency</b></div><div style="flex:1.4">Couples: high, "my marriage is in trouble"</div><div style="flex:1.4">Running on empty: medium, she can live with tired</div></div>
+    <div class="lrow"><div style="flex:1"><b>Easy to find</b></div><div style="flex:1.4">Couples: very clear</div><div style="flex:1.4">Running on empty: clear when we lead with what she feels</div></div>
+    <div class="lrow"><div style="flex:1"><b>December workshop</b></div><div style="flex:1.4">Couples: a direct fit</div><div style="flex:1.4">Running on empty: an indirect fit</div></div>
+    <div class="lrow"><div style="flex:1"><b>Your art, body and Reiki</b></div><div style="flex:1.4">Couples: through the couples work</div><div style="flex:1.4">Running on empty: fully</div></div>
+  </div>
+  <p class="b">The couples doorway is easier to fill right now. The running on empty doorway is closer to your heart. Both are real. Your Sacral decides.</p>
+
+  <h3 class="sec">How to choose</h3>
+  <div class="panel goldline">
+    <div class="lrow"><span class="ln">1</span><div><b>Read each short version and each community name out loud.</b> Not in your head. Your Sacral responds to sound, so let it hear the words.</div></div>
+    <div class="lrow"><span class="ln">2</span><div><b>Notice the first thing your body does.</b> A lean forward, a warmth, an "mm-hmm." Or a flatness, a tightening, nothing at all.</div></div>
+    <div class="lrow"><span class="ln">3</span><div><b>Voxer me which doorway and which name.</b> If two feel close, I'll ask you yes or no questions until your body settles it.</div></div>
+    <div class="lrow"><span class="ln">4</span><div><b>Check the name is free</b> on Skool and as an Instagram handle before you fall in love with it.</div></div>
+    <div class="lrow"><span class="ln">5</span><div><b>Treat it as a doorway, not a house.</b> You're a 3rd line. You'll try it, learn from it, and adjust. That's how this is meant to work for you.</div></div>
+  </div>
+
+  <h3 class="sec">What doesn't change, whichever door you pick</h3>
+  <p class="b">Art therapy, Imago, IFS, Brainspotting, somatic work, yoga, Reiki and nature all stay. They're the how, and your About page is where they get explained. The doorway is just the who and the what, so the right person recognizes herself the moment she lands. Your blueprint said it plainly: variety in your methods, not in your message.</p>
+  <div class="whisper">"Some things can't be talked through. They have to be moved through." That line belongs in every version.</div>
+</section>
+
+<!-- ================= FRONT DOOR ================= -->
+<section class="view" id="v-door">
+  <div class="kicker">Your community</div>
+  <h2 class="title">Your front door.</h2>
+  <p class="lede">A first sketch of the community, so you can see it before we build it. Nothing here is locked. Once you choose your doorway, we name it and shape it around her.</p>
+
+  <div class="stabs" role="tablist">
+    <button type="button" class="stab on" data-sub="dr-shape">The shape</button>
+    <button type="button" class="stab" data-sub="dr-folder">Your folder</button>
+    <button type="button" class="stab" data-sub="dr-gift">Your free gift</button>
+  </div>
+
+  <div class="subview on" id="dr-shape">
+    <h3 class="sec">What lives inside</h3>
+    <div class="ladder">
+      <div class="rung">
+        <div class="rl">First<br><span>what she sees</span></div>
+        <div class="rb"><div class="rn">Start here</div><div class="rd">A short welcome video of you, what this space is for, who it's for, and how to book a free consultation if she wants therapy.</div></div>
+      </div>
+      <div class="rung hot">
+        <div class="rl">The gift<br><span>why she joins</span></div>
+        <div class="rb"><div class="rn">Your free practice</div><div class="rd">The one practice you choose this month. Simple enough to do at a kitchen table with paper and a pen.</div></div>
+      </div>
+      <div class="rung">
+        <div class="rl">Growing<br><span>a little each month</span></div>
+        <div class="rb"><div class="rn">Practices library</div><div class="rd">Meditations and art directives from your folder, added one or two a month. Members watch it grow and you're not making anything new to do it.</div></div>
+      </div>
+      <div class="rung">
+        <div class="rl">Later<br><span>when it feels like a yes</span></div>
+        <div class="rb"><div class="rn">A monthly gathering</div><div class="rd">A live online art practice once a month, with the replay kept inside. A natural paid layer down the road.</div></div>
+      </div>
+      <div class="rung">
+        <div class="rl">Always<br><span>the invitation</span></div>
+        <div class="rb"><div class="rn">Workshops and intensives</div><div class="rd">Where your December weekend and future experiences are shared first, before anywhere else.</div></div>
+      </div>
+    </div>
+
+    <div class="panel goldline">
+      <span class="pill">ONE QUESTION FOR ANYTHING NEW</span>
+      <p class="b" style="margin-bottom:0">Is this for anyone who finds me, for my community, or for my clients? The answer tells you where it goes. Anyone gets your website and posts. Your community gets practices and gatherings. Your clients get therapy, through your clinical pages, kept fully separate.</p>
+    </div>
+
+    <h3 class="sec">Why this fits you</h3>
+    <p class="b">Your blueprint says your presence is your most powerful marketing, and that people feel something in your orbit before they can name it. A community gives them time in that field before they ever book. It also lets you respond instead of chase: you put a practice out, and you answer whoever shows up. That's how a Manifesting Generator is built to grow.</p>
+  </div>
+
+  <div class="subview" id="dr-folder">
+    <h3 class="sec">One folder, a few rooms</h3>
+    <p class="b">Make one folder on your desktop and give it a name you like. Inside it, these smaller folders make it easy to drop things in without thinking. Rename any of them so they sound like you.</p>
+    <div class="panel">
+      <div class="tree">
+        <div class="tf">Your gathering folder <span class="tn">everything you already have, in one place</span></div>
+        <ul>
+          <li><b>Trainings and workshops</b> <span class="tn">anything you've taught, slides, outlines, notes</span></li>
+          <li><b>Meditations and recordings</b> <span class="tn">audio, scripts, anything you've guided</span></li>
+          <li><b>Art directives and practices</b> <span class="tn">the prompts you use in session, written down</span></li>
+          <li><b>Handouts and worksheets</b> <span class="tn">what you give clients to take home</span></li>
+          <li><b>Your art and your space</b> <span class="tn">photos of your paintings, your studio, nature</span></li>
+          <li><b>Things you find yourself saying</b> <span class="tn">your own phrases, the ones that land every time</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="b">Rough is fine. A photo of a handwritten directive counts. A half-finished outline counts. We'll sort and shape it together. Keep anything with client details out of this folder, so nothing private ever ends up in the community.</p>
+    <div class="whisper">You already have more than enough. This month is about seeing it all in one place.</div>
+  </div>
+
+  <div class="subview" id="dr-gift">
+    <h3 class="sec">Ideas for your free gift</h3>
+    <p class="b">Your free gift has one job: let her feel what working with you is like. Short, simple, and something she can do on her own. Here are three directions. Your folder will probably hand you the answer.</p>
+    <div class="decgrid">
+      <div class="dec okdec"><div class="dq">An art-therapy body scan</div><div class="da">An idea from our September call. A guided recording where she notices what her body is holding, then draws it. It shows the art and the body working together in one practice.</div></div>
+      <div class="dec okdec"><div class="dq">A short guided meditation</div><div class="da">Ten minutes or so, recorded in your voice. The easiest to make from what you already have. Pair it with one journal question.</div></div>
+      <div class="dec okdec"><div class="dq">One art practice for connection</div><div class="da">A single directive built for your doorway. For the couples doorway, "The Fight Underneath the Fight": each partner draws what the argument feels like, then they share. It helps them see the pattern from the outside.</div></div>
+    </div>
+    <p class="b">Whichever you choose, it ends the same way: an invitation into the community, and a line about booking a consultation if she wants to go deeper.</p>
+  </div>
+</section>
+
+<!-- ================= DESIGN ================= -->
+<section class="view" id="v-design">
+  <div class="kicker">Your design</div>
+  <h2 class="title">How you are built to work.</h2>
+  <p class="lede">The short version of your Business Alignment Blueprint, kept one tap away, and the practices that help you live it and care for yourself. Everything in this month's plan was shaped around it.</p>
+
+  <div class="stabs" role="tablist">
+    <button type="button" class="stab on" data-sub="ds-blueprint">Your blueprint</button>
+    <button type="button" class="stab" data-sub="ds-show">Showing up</button>
+    <button type="button" class="stab" data-sub="ds-care">Caring for you</button>
+  </div>
+
+  <div class="subview on" id="ds-blueprint">
+  <div class="facts">
+    <div class="fact"><div class="fl">Type</div><div class="fv">Manifesting Generator</div><div class="fs">Depth and variety, fueled by work that lights you up</div></div>
+    <div class="fact"><div class="fl">Strategy</div><div class="fv">Respond, then inform</div><div class="fs">Feel the yes, tell people, then move</div></div>
+    <div class="fact"><div class="fl">Authority</div><div class="fv">Sacral</div><div class="fs">Your gut knows before your mind does</div></div>
+    <div class="fact"><div class="fl">Profile</div><div class="fv">3/6</div><div class="fs">The Martyr and the Role Model</div></div>
+    <div class="fact"><div class="fl">Cross</div><div class="fv">Vessel of Love</div><div class="fs">Right Angle, 10/15 | 46/25</div></div>
+    <div class="fact"><div class="fl">Signal</div><div class="fv">Satisfaction</div><div class="fs">Frustration means you pushed</div></div>
+  </div>
+
+  <h3 class="sec">Why this plan fits you</h3>
+  <details class="acc" open>
+    <summary><span class="ag">✦</span>Your purpose is relational<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>The Vessel of Love is the cross of someone whose whole life and work is built around creating the conditions for real connection. When we kept landing on art for relationships, that wasn't a random niche. That's your cross asking to be named out loud.</p>
+    </div>
+  </details>
+  <details class="acc">
+    <summary><span class="ag">✦</span>Learn by doing<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>Your 3rd line learns through trial and experience. Its shadow is shame about what didn't work, and the fear you shared in your intake: what if I build something and it's not what I want either. For you, that cycle isn't a curse. It's a curriculum. Choosing a doorway this month is an experiment, not a verdict.</p>
+    </div>
+  </details>
+  <details class="acc">
+    <summary><span class="ag">✦</span>Be seen in the middle of it<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>Your 6th line is the Role Model. People are watching how you move through this transition, and that watching builds trust. You don't need to have arrived before you talk about where you're going. Your community is where the right people get to watch you build it.</p>
+    </div>
+  </details>
+  <details class="acc">
+    <summary><span class="ag">✦</span>Respond, then inform<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>A community lets you respond instead of chase. You put something out, and you answer whoever shows up. The inform piece matters too: tell your current clients and your people what's coming before it launches. When you move without telling anyone, people feel blindsided. When you tell them, they come with you.</p>
+    </div>
+  </details>
+  <details class="acc">
+    <summary><span class="ag">✦</span>Depth over volume<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>Your Gate 15 needs rhythm and room to move, which is why fixed weekly sessions drain you. Workshops, intensives and a community with a monthly rhythm fit how you're made. Concentrated, immersive, then complete.</p>
+    </div>
+  </details>
+  <details class="acc">
+    <summary><span class="ag">✦</span>Your presence does the marketing<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p>Gate 25 is universal love, the quality your clients describe as rare. You can't manufacture it, and you don't have to. The more time people spend in your field, the more it does the work. A free gift and a community give them that time before they ever book.</p>
+    </div>
+  </details>
+
+  <h3 class="sec">Where you're built to lead</h3>
+  <p class="b">Your Throat, G, Sacral and Spleen are defined. That means a voice that's ready when what you're saying is real, an identity that holds steady even when your direction feels uncertain, a reliable engine for work you love, and a quiet instinct that reads what's true in the room. None of these need building. They need trusting.</p>
+
+  <h3 class="sec">Your open centers</h3>
+  <p class="b">You have five open centers: Head, Ajna, Will, Solar Plexus and Root. That openness is why clients feel felt by you, not just heard. It also means you take in a lot of other people's pressure, ideas and feelings and experience them as your own.</p>
+  <p class="b">A lot of what came up on our call starts here. Too many ideas, everything feeling urgent, losing the thread on marketing. That's your open Head and Root talking at once. It isn't a sign something is wrong with you. It's a sign to come back to your Sacral.</p>
+
+  <div class="panel goldline">
+    <span class="pill">WHEN IT FEELS LIKE TOO MUCH</span>
+    <p class="b">Name which center is talking, then ask your Sacral one yes or no question.</p>
+    <div class="decgrid" style="margin-bottom:0">
+      <div class="dec"><div class="dq">"I have so many ideas."</div><div class="da">Open Head. Ask: "Is this idea mine, or did I pick it up scrolling?"</div></div>
+      <div class="dec"><div class="dq">"What if I choose wrong?"</div><div class="da">Open Ajna. Ask: "Do I want this?" not "Is this right?"</div></div>
+      <div class="dec"><div class="dq">"I need to prove I'm worth it."</div><div class="da">Open Will. Ask: "Am I adding this to prove something?"</div></div>
+      <div class="dec"><div class="dq">"I feel heavy and I don't know why."</div><div class="da">Open Solar Plexus. Ask: "Is this feeling mine?"</div></div>
+      <div class="dec"><div class="dq">"Everything has to happen now."</div><div class="da">Open Root. Ask: "Is this actually due today?"</div></div>
+    </div>
+  </div>
+
+  <details class="acc">
+    <summary><span class="ag">◯</span>Open Head: inspiration and mental pressure<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p><b>What it takes in:</b> other people's questions and ideas, including everything you see when you scroll.</p>
+      <p><b>How it shows up for you:</b> a flood of offers, workshops and directions that all feel exciting in the moment. Not all of them are yours.</p>
+      <p><b>Come back to:</b> catch every idea in your Idea Log and leave it overnight. The ones still alive in a few days are worth your attention.</p>
+    </div>
+  </details>
+  <details class="acc">
+    <summary><span class="ag">◯</span>Open Ajna: certainty and doubt<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p><b>What it takes in:</b> other people's ways of seeing. You can hold many truths at once, which makes you a nuanced practitioner and makes choosing hard.</p>
+      <p><b>How it shows up for you:</b> waiting until a niche feels completely clear before you commit, then second-guessing it after.</p>
+      <p><b>Come back to:</b> not being certain isn't the same as being wrong. Your mind is great for research. Let your Sacral decide.</p>
+    </div>
+  </details>
+  <details class="acc">
+    <summary><span class="ag">◯</span>Open Will: worth and proving<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p><b>What it takes in:</b> the world's pressure to earn your place through effort.</p>
+      <p><b>How it shows up for you:</b> adding more to an offer instead of trusting it, or justifying your prices before anyone asks.</p>
+      <p><b>Come back to:</b> move from proving to declaring. Your value lives in the depth you carry, not the hours you give.</p>
+    </div>
+  </details>
+  <details class="acc">
+    <summary><span class="ag">◯</span>Open Solar Plexus: feeling everyone's feelings<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p><b>What it takes in:</b> the emotional reality of every client and every room.</p>
+      <p><b>How it shows up for you:</b> ending a full day carrying people you sat with hours ago. A big part of why your current session load is so tiring.</p>
+      <p><b>Come back to:</b> real space between sessions, and the reset in Check In. Don't make big decisions while you're still holding someone else's feelings.</p>
+    </div>
+  </details>
+  <details class="acc">
+    <summary><span class="ag">◯</span>Open Root: pressure and urgency<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p><b>What it takes in:</b> other people's rush. Stressed clients, busy feeds, anyone in hustle mode.</p>
+      <p><b>How it shows up for you:</b> trying to stabilize income, leave weekly therapy, build workshops and explore new paths all at the same time.</p>
+      <p><b>Come back to:</b> one task at a time, chosen by your gut. Nothing in your plan is an emergency.</p>
+    </div>
+  </details>
+
+  <h3 class="sec">Your daily decision practice</h3>
+  <p class="b"><b>Small decisions:</b> say it out loud as a yes or no question, like "Do I want to work on my folder today?" Follow the first sound your body makes. You don't need to sleep on it.</p>
+  <p class="b"><b>Bigger decisions:</b> give it 24 hours. A workshop idea that's still a yes in the morning is real. Or Voxer me, and I'll ask you yes or no questions until the answer comes from your body and not your head.</p>
+  </div>
+
+  <div class="subview" id="ds-show">
+  <h3 class="sec">How your design shows up</h3>
+  <p class="b">You have four channels running into your Throat, and together they tell a clear story. You're not a tips creator or a posting-schedule person. You speak best right after something real has moved you, when your Sacral is lit up about it, and when you've had a moment to sit with what it revealed. So showing up, for you, is less about a content calendar and more about catching what's alive and sharing it honestly.</p>
+  <div class="whisper">Consistent doesn't mean every day. It means not disappearing.</div>
+
+  <div class="panel">
+    <span class="pill">YOUR PRACTICES</span>
+    <div class="lrow"><span class="ln">1</span><div><b>Catch it while it's warm.</b> After a session that moves you, or a walk when a thought arrives, record a one-minute voice memo right then. Your Spleen speaks once, in the moment. That memo becomes a post or a community practice later. <span class="why">16-48 and 20-57</span></div></div>
+    <div class="lrow"><span class="ln">2</span><div><b>Write from witness.</b> Share what you've lived and seen, not instructions. One real story, one real feeling, one invitation. <span class="why">33-13, the storyteller</span></div></div>
+    <div class="lrow"><span class="ln">3</span><div><b>Only post on a yes.</b> When your Sacral is lit up, it's in your words and people feel it. When you force it, they feel that too. <span class="why">20-34</span></div></div>
+    <div class="lrow"><span class="ln">4</span><div><b>Keep a library for flat days.</b> On a lit-up day, write two or three extra posts and save them in one place. On flat days, share one of those instead of forcing something new. <span class="why">Manifesting Generator</span></div></div>
+    <div class="lrow"><span class="ln">5</span><div><b>Tell people where you're going.</b> Let your current clients and your people know about the community and the workshop before they open. Informing builds momentum. <span class="why">Your strategy</span></div></div>
+    <div class="lrow"><span class="ln">6</span><div><b>Let them see the painter.</b> Your art, your creek walks, your studio. The woman who weaves art and body and relationship together is the real you, and she's the one people are looking for. <span class="why">Defined G, 6th line</span></div></div>
+    <div class="lrow"><span class="ln">7</span><div><b>One place, not everywhere.</b> Pick one channel for now. Spreading across all of them is your open Head and Root, not your strategy. <span class="why">Open Head and Root</span></div></div>
+  </div>
+
+  <h3 class="sec">On any given day</h3>
+  <div class="decgrid">
+    <div class="dec okdec"><div class="dq">A lit-up day</div><div class="da">Share what lit you up, then write a couple of extras for your library while the energy's there.</div></div>
+    <div class="dec"><div class="dq">A flat day</div><div class="da">Post one from your library, or skip. Both are fine.</div></div>
+    <div class="dec nodec"><div class="dq">A heavy day</div><div class="da">Step outside first. Name which center is talking. Then do one thing, or nothing.</div></div>
+  </div>
+  </div>
+
+  <div class="subview" id="ds-care">
+  <h3 class="sec">Caring for you, by design</h3>
+  <p class="b">With five open centers, your energy field takes in a lot. That isn't a problem to fix. It's a reality to design around. These come straight from your blueprint's working rhythm, and they're what make the rest of this sustainable.</p>
+
+  <div class="panel goldline">
+    <span class="pill">YOUR WEEKLY RHYTHM</span>
+    <div class="lrow"><span class="ln">✦</span><div><b>Three to four client hours a day,</b> not back to back.</div></div>
+    <div class="lrow"><span class="ln">✦</span><div><b>Two to three client days a week,</b> with the rest for building, creating and rest.</div></div>
+    <div class="lrow"><span class="ln">✦</span><div><b>One full day with no client work, no admin and ideally no screens.</b> Your creative and Sacral recovery day.</div></div>
+    <div class="lrow"><span class="ln">✦</span><div><b>Mornings protected</b> for your own painting or grounding practice, even fifteen minutes.</div></div>
+    <div class="lrow"><span class="ln">✦</span><div><b>Late client work kept rare.</b> Your Sacral and open Root don't do their best work at the end of a full day.</div></div>
+  </div>
+
+  <h3 class="sec">After you hold someone</h3>
+  <p class="b">Your open Solar Plexus and Root mean what you absorb doesn't leave on its own when a session ends. A ten-minute walk outside between sessions isn't a luxury for your design. It's a functional need. Wash your hands slowly at the end of your client day, give yourself a few minutes of Reiki before bed, and try not to go straight from sessions into loud, busy places.</p>
+
+  <h3 class="sec">Your quiet instinct</h3>
+  <p class="b">Your Spleen is defined. It speaks once, quietly, in the moment: this doesn't feel right, this person drains me, I need to rest. When it whispers, listen the first time. It won't shout.</p>
+
+  <h3 class="sec">Signs you're working against your design</h3>
+  <p class="b">You finish the day hollow, not just tired. You dread your heaviest session day. Ideas excite you for a day and then fade without action. You keep saying yes to clients your body was a no to because of money pressure. Any one of these is data, not failure. Come back here and pick one thing to change.</p>
+
+  <div class="whisper">You hold everyone else. You get to be held too.</div>
+  </div>
+</section>
+
+<!-- ================= CHECK IN ================= -->
+<section class="view" id="v-checkin">
+  <div class="kicker">Daily tools</div>
+  <h2 class="title">Check in.</h2>
+  <p class="lede">Small practices, a minute or two each. They put your gut on the record, so you can see your own patterns over time.</p>
+
+  <h3 class="sec">Ask your Sacral</h3>
+  <div class="panel">
+    <p class="b">Type a yes or no question, say it out loud, and log what your body did before your mind stepped in.</p>
+    <input class="qin" id="sac-q" placeholder="Is couples the doorway I want to open first?">
+    <div class="btnrow">
+      <button type="button" class="btn sageb" id="sac-yes">Yes, a lean in</button>
+      <button type="button" class="btn roseb" id="sac-no">No, a pull back</button>
+      <button type="button" class="btn ghost" id="sac-flat">Nothing yet</button>
+    </div>
+    <div class="loglist" id="sac-log"><div class="empty">No questions logged yet. The first one feels strange, then it becomes second nature.</div></div>
+  </div>
+
+  <h3 class="sec">How was today?</h3>
+  <div class="panel">
+    <p class="b">One tap at the end of the day. For your design, satisfaction means you spent your energy on real yeses. Frustration means somewhere you pushed, or skipped a step without telling anyone. No judgment either way.</p>
+    <div class="wavegrid">
+      <button type="button" data-wave="Lit up"><span>☀</span>Lit up</button>
+      <button type="button" data-wave="Satisfied"><span>✶</span>Satisfied</button>
+      <button type="button" data-wave="In between"><span>─</span>In between</button>
+      <button type="button" data-wave="Frustrated"><span>◡</span>Frustrated</button>
+      <button type="button" data-wave="Hollow"><span>☾</span>Hollow</button>
+    </div>
+    <div class="loglist" id="wave-log"><div class="empty">No check ins yet.</div></div>
+  </div>
+
+  <h3 class="sec">The between-sessions reset</h3>
+  <div class="panel goldline">
+    <p class="b">Straight from your blueprint, for your open Solar Plexus and open Root. Use it between clients, and once at the end of your client day, so you don't carry people home with you.</p>
+    <ol class="steps">
+      <li>Step outside for five to ten minutes. Let your eyes rest on something living, a tree, the sky, the creek.</li>
+      <li>Ask quietly: "Is what I'm feeling mine?" If it isn't, picture setting it down.</li>
+      <li>At the end of the day, wash your hands slowly and on purpose, as the close of your client time.</li>
+      <li>Before bed, a few minutes of Reiki on yourself. You give it to everyone else. You get to receive it too.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= IDEA LOG ================= -->
+<section class="view" id="v-ideas">
+  <div class="kicker">Catch now, decide later</div>
+  <h2 class="title">The idea log.</h2>
+  <p class="lede">Your open Head picks up ideas everywhere, from clients, from scrolling, from the conference next week. Catch each one here the moment it arrives. Tomorrow, ask your body if it's still a yes. If it lights you up, it's real. If it's gone flat, let it go with no guilt.</p>
+  <div class="panel">
+    <input class="qin" id="idea-in" placeholder="A workshop theme, an art practice, a post, a painting, anything...">
+    <div class="btnrow"><button type="button" class="btn goldb" id="idea-add">Catch it</button></div>
+    <div class="loglist" id="idea-log"><div class="empty">Nothing caught yet. The next idea goes here instead of into a sticky note.</div></div>
+  </div>
+</section>
+
+<!-- ================= TAPPING ================= -->
+<section class="view" id="v-tapping">
+  <div class="kicker">EFT, written from our call</div>
+  <h2 class="title">Tapping scripts.</h2>
+  <p class="lede">Three scripts, written from what came up on our October call. Change any line that doesn't sound like you. Rate the feeling before you start, tap through the rounds, then rate it again. Begin each one with the setup statement on the karate chop point, said three times.</p>
+
+  <details class="acc script" id="script-s1">
+    <summary><span class="ag">✦</span>Too many ideas, one doorway<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p class="b">For the moments your head fills up with directions and choosing one feels like losing the rest. Use it before you read your two doorways, or any time the ideas start spinning.</p>
+      <div class="suds" data-s="s1" data-pos="before"><div class="suds-l">Before you tap: how strong is it right now? 0 is nothing, 10 is a lot.</div><div class="suds-nums"></div></div>
+      <div class="pacer" data-s="s1"><button type="button" class="btn goldb psmall pace-toggle">▶ Start guided pace</button><button type="button" class="pchip pace-slower">slower</button><button type="button" class="pchip pace-faster">faster</button><span class="plabel"></span></div>
+      <div class="setupline"><b>SETUP, KARATE CHOP, SAY 3 TIMES</b>"Even though I have so many ideas and choosing one feels like losing the rest, I love and accept myself, and I choose one doorway for now."</div>
+      <details class="acc" open><summary><span class="ag">1</span>Round one: naming it<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Let the scattered feeling be here. Say it plainly.</div>
+        <div class="tapline"><span class="pt">EYEBROW</span><span class="tx">So many ideas</span></div>
+        <div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">Couples, women, families, retreats</span></div>
+        <div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">Art, Imago, IFS, the body</span></div>
+        <div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">If I pick one, what happens to the rest</span></div>
+        <div class="tapline"><span class="pt">CHIN</span><span class="tx">This scattered feeling</span></div>
+        <div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">Starting strong, then losing the thread</span></div>
+        <div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">A training, a conference, a full week</span></div>
+        <div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">All of it, and it's okay to feel it</span></div>
+      </div></details>
+      <details class="acc" open><summary><span class="ag">2</span>Round two: softening<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>A doorway isn't a cage. Everything you know still comes through it.</div>
+        <div class="tapline"><span class="pt">EYEBROW</span><span class="tx">A doorway isn't a cage</span></div>
+        <div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">I still get to use everything I know</span></div>
+        <div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">The art, the body, the relationship work</span></div>
+        <div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">They all live behind one clear door</span></div>
+        <div class="tapline"><span class="pt">CHIN</span><span class="tx">Some of these ideas aren't even mine</span></div>
+        <div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">My open head picks them up everywhere</span></div>
+        <div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">I can write them down and let them rest</span></div>
+        <div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">The real ones will still be here tomorrow</span></div>
+      </div></details>
+      <details class="acc" open><summary><span class="ag">3</span>Round three: choosing<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Now choose. Say these like decisions.</div>
+        <div class="tapline"><span class="pt">EYEBROW</span><span class="tx">I choose one doorway for now</span></div>
+        <div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">I let my gut pick it</span></div>
+        <div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">I don't have to see the whole path</span></div>
+        <div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">I learn by walking it</span></div>
+        <div class="tapline"><span class="pt">CHIN</span><span class="tx">Moving brings the clarity</span></div>
+        <div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">One thing, for long enough to see it grow</span></div>
+        <div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">I'm allowed to adjust later</span></div>
+        <div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">That's how I'm built to grow</span></div>
+      </div></details>
+      <div class="suds" data-s="s1" data-pos="after"><div class="suds-l">Now take a slow breath and check again. Where is it now?</div><div class="suds-nums"></div></div>
+      <div class="suds-delta" data-s="s1"></div>
+    </div>
+  </details>
+
+  <details class="acc script" id="script-s2">
+    <summary><span class="ag">✦</span>What if I build it and it's not right<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p class="b">For the fear underneath the niche question. You wrote it in your intake: what if I build something and it's not actually what I want either. Use it before you commit to anything that feels big.</p>
+      <div class="suds" data-s="s2" data-pos="before"><div class="suds-l">Before you tap: how strong is it right now? 0 is nothing, 10 is a lot.</div><div class="suds-nums"></div></div>
+      <div class="pacer" data-s="s2"><button type="button" class="btn goldb psmall pace-toggle">▶ Start guided pace</button><button type="button" class="pchip pace-slower">slower</button><button type="button" class="pchip pace-faster">faster</button><span class="plabel"></span></div>
+      <div class="setupline"><b>SETUP, KARATE CHOP, SAY 3 TIMES</b>"Even though part of me is afraid I'll build this and find out it isn't what I want either, I love and accept myself, and I trust what I learn by doing."</div>
+      <details class="acc" open><summary><span class="ag">1</span>Round one: naming it<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Name the fear honestly. It loosens once it's said.</div>
+        <div class="tapline"><span class="pt">EYEBROW</span><span class="tx">What if I get it wrong</span></div>
+        <div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">What if I build it and it's not right</span></div>
+        <div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">I've changed direction before</span></div>
+        <div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">And I wondered what that said about me</span></div>
+        <div class="tapline"><span class="pt">CHIN</span><span class="tx">This fear of starting over</span></div>
+        <div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">Another thing that might not work</span></div>
+        <div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">I want a guarantee first</span></div>
+        <div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">This fear, and it's okay to feel it</span></div>
+      </div></details>
+      <details class="acc" open><summary><span class="ag">2</span>Round two: softening<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Every path you've walked built the practitioner you are now. Nothing was wasted.</div>
+        <div class="tapline"><span class="pt">EYEBROW</span><span class="tx">Every training I took</span></div>
+        <div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">Every client I sat with</span></div>
+        <div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">Every direction that shifted</span></div>
+        <div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">Built the way I work now</span></div>
+        <div class="tapline"><span class="pt">CHIN</span><span class="tx">Nothing was wasted</span></div>
+        <div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">I'm built to learn by trying</span></div>
+        <div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">What doesn't fit still teaches me</span></div>
+        <div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">That isn't failure, it's my path</span></div>
+      </div></details>
+      <details class="acc" open><summary><span class="ag">3</span>Round three: choosing<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Now choose. Say these like decisions.</div>
+        <div class="tapline"><span class="pt">EYEBROW</span><span class="tx">I choose to try</span></div>
+        <div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">I start before I'm certain</span></div>
+        <div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">I let the doing teach me</span></div>
+        <div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">I notice what lights me up</span></div>
+        <div class="tapline"><span class="pt">CHIN</span><span class="tx">I notice what goes flat</span></div>
+        <div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">I trust my body to tell me</span></div>
+        <div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">I can adjust as I go</span></div>
+        <div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">I'm building something that fits me</span></div>
+      </div></details>
+      <div class="suds" data-s="s2" data-pos="after"><div class="suds-l">Now take a slow breath and check again. Where is it now?</div><div class="suds-nums"></div></div>
+      <div class="suds-delta" data-s="s2"></div>
+    </div>
+  </details>
+
+  <details class="acc script" id="script-s3">
+    <summary><span class="ag">✦</span>Letting the right people find me<span class="caret">›</span></summary>
+    <div class="acc-body">
+      <p class="b">For the days marketing feels like shouting into nothing, or social media just doesn't feel like you. Use it before you write a post or send a workshop invitation.</p>
+      <div class="suds" data-s="s3" data-pos="before"><div class="suds-l">Before you tap: how strong is it right now? 0 is nothing, 10 is a lot.</div><div class="suds-nums"></div></div>
+      <div class="pacer" data-s="s3"><button type="button" class="btn goldb psmall pace-toggle">▶ Start guided pace</button><button type="button" class="pchip pace-slower">slower</button><button type="button" class="pchip pace-faster">faster</button><span class="plabel"></span></div>
+      <div class="setupline"><b>SETUP, KARATE CHOP, SAY 3 TIMES</b>"Even though putting myself out there feels uncomfortable and social media doesn't feel like me, I love and accept myself, and I let the right people find me in my own way."</div>
+      <details class="acc" open><summary><span class="ag">1</span>Round one: naming it<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Let the discomfort be here. Say it plainly.</div>
+        <div class="tapline"><span class="pt">EYEBROW</span><span class="tx">Social media doesn't feel like me</span></div>
+        <div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">Selling myself feels strange</span></div>
+        <div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">I'd rather be with my clients</span></div>
+        <div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">I start, then lose momentum</span></div>
+        <div class="tapline"><span class="pt">CHIN</span><span class="tx">Strangers scrolling right past</span></div>
+        <div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">Like I'm talking to no one</span></div>
+        <div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">And feeling like I should be doing more</span></div>
+        <div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">All of it, and it's okay to feel it</span></div>
+      </div></details>
+      <details class="acc" open><summary><span class="ag">2</span>Round two: softening<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>You don't have to chase strangers. You're building a warm place for the right people to land.</div>
+        <div class="tapline"><span class="pt">EYEBROW</span><span class="tx">I don't have to chase strangers</span></div>
+        <div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">I'm building a warm place instead</span></div>
+        <div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">The right people want to find me</span></div>
+        <div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">My clients already feel it</span></div>
+        <div class="tapline"><span class="pt">CHIN</span><span class="tx">The way they feel held in the room</span></div>
+        <div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">That can come through my words too</span></div>
+        <div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">One real story at a time</span></div>
+        <div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">One place, not everywhere</span></div>
+      </div></details>
+      <details class="acc" open><summary><span class="ag">3</span>Round three: choosing<span class="caret">›</span></summary><div class="acc-body"><div class="roundfocus"><b>WHAT TO FEEL THIS ROUND</b>Now choose. Say these like decisions.</div>
+        <div class="tapline"><span class="pt">EYEBROW</span><span class="tx">I choose to be seen as I am</span></div>
+        <div class="tapline"><span class="pt">SIDE OF EYE</span><span class="tx">The painter and the therapist</span></div>
+        <div class="tapline"><span class="pt">UNDER EYE</span><span class="tx">I share what I've witnessed</span></div>
+        <div class="tapline"><span class="pt">UNDER NOSE</span><span class="tx">I invite, I don't push</span></div>
+        <div class="tapline"><span class="pt">CHIN</span><span class="tx">I let my presence do the work</span></div>
+        <div class="tapline"><span class="pt">COLLARBONE</span><span class="tx">I build my front door</span></div>
+        <div class="tapline"><span class="pt">UNDER ARM</span><span class="tx">And I open it</span></div>
+        <div class="tapline"><span class="pt">TOP OF HEAD</span><span class="tx">The right people walk in</span></div>
+      </div></details>
+      <div class="suds" data-s="s3" data-pos="after"><div class="suds-l">Now take a slow breath and check again. Where is it now?</div><div class="suds-nums"></div></div>
+      <div class="suds-delta" data-s="s3"></div>
+    </div>
+  </details>
+
+  <div class="panel">
+    <span class="pill">AFTER OUR NEXT CALL</span>
+    <p class="b" style="margin-bottom:0">If something specific comes up in November, a new script gets written around your exact words and added here.</p>
+  </div>
+</section>
+
+<!-- ================= WINS ================= -->
+<section class="view" id="v-wins">
+  <div class="kicker">Evidence</div>
+  <h2 class="title">The wins ledger.</h2>
+  <p class="lede">A full week makes it easy to forget what went right. Keep the proof here. Anything counts: a booking that came through, a folder that filled up, an invitation sent, a rest day actually taken.</p>
+  <div class="panel">
+    <input class="qin" id="win-in" placeholder="What happened?">
+    <div class="btnrow"><button type="button" class="btn goldb" id="win-add">Add it to the ledger</button></div>
+    <div class="loglist" id="win-log"><div class="empty">Your website going live with a working booking link belongs here.</div></div>
+  </div>
+  <div class="footer">
+    <div class="sig">A different way of seeing, Rachael.</div>
+    Aurailia for Rachael, VIP October 2026. To living our dreams.
+    <div class="storenote">Everything you write here is saved privately in this browser and is here when you return.</div>
+  </div>
+</section>
+
+</div></main>
+</div>
+
+<script>
+/* ============ data ============ */
+const VIEWS=[
+  {id:"welcome",label:"Welcome",g:"✦"},
+  {id:"recap",label:"Call Recap",g:"◈"},
+  {id:"plan",label:"October Plan",g:"◆"},
+  {id:"path",label:"Your Offer Path",g:"❀"},
+  {id:"niche",label:"Who It's For",g:"◎"},
+  {id:"door",label:"Your Front Door",g:"◇"},
+  {id:"design",label:"Your Design",g:"✧"},
+  {id:"checkin",label:"Check In",g:"◠"},
+  {id:"ideas",label:"Idea Log",g:"✺"},
+  {id:"tapping",label:"Tapping",g:"☾"},
+  {id:"wins",label:"Wins Ledger",g:"✶"}
+];
+
+
+
+/* ============ storage ============ */
+const mem={};
+async function sGet(k){
+  try{ if(window.storage){ const r=await window.storage.get(k); if(r) return JSON.parse(r.value); } }catch(e){}
+  try{ const v=localStorage.getItem(k); if(v!==null) return JSON.parse(v); }catch(e){}
+  return mem[k]!==undefined?mem[k]:null;
+}
+async function sSet(k,v){
+  mem[k]=v;
+  try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){}
+  try{ if(window.storage){ await window.storage.set(k,JSON.stringify(v)); } }catch(e){}
+}
+function todayKey(){
+  const d=new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function niceDate(k){
+  const [y,m,d]=k.split("-").map(Number);
+  return new Date(y,m-1,d).toLocaleDateString("en-US",{month:"short",day:"numeric"});
+}
+function nowStamp(){
+  return new Date().toLocaleDateString("en-US",{month:"short",day:"numeric"});
+}
+
+/* ============ nav ============ */
+const navEl=document.getElementById("nav");
+const mddEl=document.querySelector(".mdd");
+const mddBtn=document.getElementById("mdd-btn");
+const mddList=document.getElementById("mdd-list");
+function closeMdd(){mddEl.classList.remove("open");mddBtn.setAttribute("aria-expanded","false");}
+function go(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("on",v.id==="v-"+id));
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===id));
+  document.querySelectorAll("#mdd-list button").forEach(b=>b.classList.toggle("on",b.dataset.v===id));
+  const v=VIEWS.find(x=>x.id===id);
+  if(v){document.getElementById("mdd-label").textContent=v.label;document.getElementById("mdd-g").textContent=v.g;}
+  closeMdd();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+VIEWS.forEach(v=>{
+  const b=document.createElement("button");
+  b.type="button";
+  b.dataset.v=v.id;
+  b.innerHTML='<span class="g">'+v.g+'</span>'+v.label+'<span class="tick" id="tick-'+v.id+'">✓</span>';
+  b.addEventListener("click",()=>go(v.id));
+  navEl.appendChild(b);
+  const mb=document.createElement("button");
+  mb.type="button";
+  mb.dataset.v=v.id;
+  mb.innerHTML='<span class="g">'+v.g+'</span>'+v.label;
+  mb.setAttribute("role","option");
+  mb.addEventListener("click",()=>go(v.id));
+  mddList.appendChild(mb);
+});
+mddBtn.addEventListener("click",e=>{
+  e.stopPropagation();
+  const open=mddEl.classList.toggle("open");
+  mddBtn.setAttribute("aria-expanded",open?"true":"false");
+});
+document.addEventListener("click",e=>{
+  if(!mddEl.contains(e.target)) closeMdd();
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMdd();});
+go("welcome");
+
+/* ============ journals ============ */
+function wireJournal(taId,ssId,key){
+  const ta=document.getElementById(taId), ss=document.getElementById(ssId);
+  let t=null;
+  ta.addEventListener("input",()=>{
+    ss.textContent="Saving...";
+    clearTimeout(t);
+    t=setTimeout(async()=>{
+      await sSet(key,ta.value);
+      ss.textContent=ta.value.trim()?"Saved":"";
+      const tick=document.getElementById("tick-call");
+      if(tick&&taId==="jr-prep") tick.classList.toggle("done",!!ta.value.trim());
+    },600);
+  });
+}
+
+/* ============ sacral ============ */
+let sacLog=[];
+function renderSac(){
+  const el=document.getElementById("sac-log");
+  if(!sacLog.length){el.innerHTML='<div class="empty">No questions logged yet. The first one feels strange, then it becomes second nature.</div>';return;}
+  el.innerHTML=sacLog.slice(0,14).map(i=>
+    '<div class="logitem"><div class="when">'+i.d+'</div><div class="what">'+esc(i.q)+' <span class="ans '+i.c+'">'+i.a+'</span></div></div>'
+  ).join("");
+}
+async function addSac(a,c){
+  const q=document.getElementById("sac-q").value.trim();
+  if(!q) return;
+  sacLog.unshift({q:q,a:a,c:c,d:nowStamp()});
+  sacLog=sacLog.slice(0,40);
+  await sSet("rachaelvip:sacral",sacLog);
+  document.getElementById("sac-q").value="";
+  renderSac();
+}
+document.getElementById("sac-yes").addEventListener("click",()=>addSac("uh-huh","yes"));
+document.getElementById("sac-no").addEventListener("click",()=>addSac("uh-uh","no"));
+document.getElementById("sac-flat").addEventListener("click",()=>addSac("nothing","flat"));
+
+/* ============ wave ============ */
+let waveLog=[];
+function renderWave(){
+  const el=document.getElementById("wave-log");
+  if(!waveLog.length){el.innerHTML='<div class="empty">No check ins yet.</div>';return;}
+  el.innerHTML=waveLog.slice(0,10).map(i=>
+    '<div class="logitem"><div class="when">'+i.d+'</div><div class="what">'+esc(i.w)+'</div></div>'
+  ).join("");
+}
+document.querySelectorAll(".wavegrid button").forEach(b=>{
+  b.addEventListener("click",async()=>{
+    document.querySelectorAll(".wavegrid button").forEach(x=>x.classList.remove("sel"));
+    b.classList.add("sel");
+    waveLog.unshift({w:b.dataset.wave,d:nowStamp()});
+    waveLog=waveLog.slice(0,30);
+    await sSet("rachaelvip:wave",waveLog);
+    renderWave();
+    const tick=document.getElementById("tick-checkin");
+    if(tick) tick.classList.add("done");
+  });
+});
+
+/* ============ idea log ============ */
+let ideaLog=[];
+function daysSince(k){
+  const [y,mo,d]=k.split("-").map(Number);
+  const then=new Date(y,mo-1,d), now=new Date();
+  return Math.floor((new Date(now.getFullYear(),now.getMonth(),now.getDate())-then)/86400000);
+}
+function renderIdeas(){
+  const el=document.getElementById("idea-log");
+  if(!ideaLog.length){el.innerHTML='<div class="empty">Nothing caught yet. The next idea goes here instead of into a sticky note.</div>';return;}
+  el.innerHTML="";
+  ideaLog.forEach((i,ix)=>{
+    const days=daysSince(i.k);
+    const wrap=document.createElement("div");
+    wrap.className="idea"+(i.st==="release"?" released":"");
+    let meta='<span>caught '+(days===0?"today":days===1?"yesterday":days+" days ago")+'</span>';
+    if(i.st==="keep"){
+      meta+='<span class="ibadge keep">✶ still a yes</span><button type="button" class="ibtn undo" data-a="undo" data-i="'+ix+'">undo</button>';
+    }else if(i.st==="release"){
+      meta+='<span class="ibadge" style="color:var(--muted)">released</span><button type="button" class="ibtn undo" data-a="undo" data-i="'+ix+'">undo</button>';
+    }else if(days<1){
+      meta+='<span class="ibadge rest">resting overnight · ask your gut tomorrow</span>';
+    }else{
+      meta+='<button type="button" class="ibtn" data-a="keep" data-i="'+ix+'">Still lights me up</button><button type="button" class="ibtn" data-a="release" data-i="'+ix+'">Gone flat</button>';
+    }
+    wrap.innerHTML='<div class="it">'+esc(i.t)+'</div><div class="imeta">'+meta+'</div>';
+    el.appendChild(wrap);
+  });
+  el.querySelectorAll(".ibtn").forEach(b=>{
+    b.addEventListener("click",async()=>{
+      const ix=+b.dataset.i, a=b.dataset.a;
+      ideaLog[ix].st=(a==="undo")?null:a;
+      await sSet("rachaelvip:ideas",ideaLog);
+      renderIdeas();
+    });
+  });
+}
+document.getElementById("idea-add").addEventListener("click",async()=>{
+  const v=document.getElementById("idea-in").value.trim();
+  if(!v) return;
+  ideaLog.unshift({t:v,k:todayKey(),st:null});
+  ideaLog=ideaLog.slice(0,80);
+  await sSet("rachaelvip:ideas",ideaLog);
+  document.getElementById("idea-in").value="";
+  renderIdeas();
+  const tick=document.getElementById("tick-ideas"); if(tick)tick.classList.add("done");
+});
+document.getElementById("idea-in").addEventListener("keydown",e=>{
+  if(e.key==="Enter") document.getElementById("idea-add").click();
+});
+
+/* ============ suds ============ */
+let sudsState={};
+async function setSuds(sc,pos,n){
+  sudsState[sc]=sudsState[sc]||{};
+  sudsState[sc][pos]=n;
+  await sSet("rachaelvip:suds",sudsState);
+  renderSuds();
+}
+function renderSuds(){
+  document.querySelectorAll(".suds").forEach(el=>{
+    const v=(sudsState[el.dataset.s]||{})[el.dataset.pos];
+    el.querySelectorAll(".suds-nums button").forEach(b=>b.classList.toggle("sel",v!==undefined&&+b.textContent===v));
+  });
+  document.querySelectorAll(".suds-delta").forEach(d=>{
+    const st=sudsState[d.dataset.s]||{};
+    if(st.before!==undefined&&st.after!==undefined){
+      if(st.after<st.before) d.textContent="From "+st.before+" down to "+st.after+". That's your body letting go. Well done.";
+      else if(st.after===st.before) d.textContent="Holding at "+st.before+". Run one more round, slower this time.";
+      else d.textContent="It went up, which usually means you touched something real. Run one more round, or Voxer me.";
+    } else d.textContent="";
+  });
+}
+function initSuds(){
+  document.querySelectorAll(".suds").forEach(el=>{
+    const nums=el.querySelector(".suds-nums");
+    for(let n=0;n<=10;n++){
+      const b=document.createElement("button");
+      b.type="button"; b.textContent=n;
+      b.addEventListener("click",()=>setSuds(el.dataset.s,el.dataset.pos,n));
+      nums.appendChild(b);
+    }
+  });
+  renderSuds();
+}
+
+/* ============ guided pace ============ */
+const pacer={raf:null,speed:14,active:null,paused:false,last:undefined,acc:0};
+function paceLabel(){
+  return pacer.speed<=9?"very slow":pacer.speed<=15?"slow":pacer.speed<=23?"steady":"brisk";
+}
+function updatePacerUI(){
+  document.querySelectorAll(".pacer").forEach(p=>{
+    const on=pacer.active===p.dataset.s;
+    p.querySelector(".pace-toggle").textContent=on?(pacer.paused?"▶ Resume":"❚❚ Pause"):"▶ Start guided pace";
+    p.querySelector(".plabel").textContent="pace: "+paceLabel();
+  });
+}
+function stopPace(){
+  pacer.active=null;pacer.paused=false;pacer.last=undefined;pacer.acc=0;
+  if(pacer.raf){cancelAnimationFrame(pacer.raf);pacer.raf=null;}
+  updatePacerUI();
+}
+function stepPace(ts){
+  if(!pacer.active){pacer.raf=null;return;}
+  if(pacer.paused||pacer.last===undefined){pacer.last=ts;pacer.raf=requestAnimationFrame(stepPace);return;}
+  const dt=Math.min(ts-pacer.last,60);pacer.last=ts;
+  pacer.acc+=pacer.speed*dt/1000;
+  const px=Math.floor(pacer.acc);
+  if(px>=1){window.scrollBy(0,px);pacer.acc-=px;}
+  const d=document.getElementById("script-"+pacer.active);
+  const doc=document.documentElement;
+  const atDocEnd=window.innerHeight+window.scrollY>=doc.scrollHeight-2;
+  if((d&&d.getBoundingClientRect().bottom<=window.innerHeight-40)||atDocEnd){stopPace();return;}
+  pacer.raf=requestAnimationFrame(stepPace);
+}
+document.querySelectorAll(".pacer").forEach(p=>{
+  const sid=p.dataset.s;
+  p.querySelector(".pace-toggle").addEventListener("click",()=>{
+    if(pacer.active===sid){pacer.paused=!pacer.paused;pacer.last=undefined;pacer.acc=0;}
+    else{
+      const d=document.getElementById("script-"+sid);
+      if(d&&!d.open)d.open=true;
+      pacer.active=sid;pacer.paused=false;pacer.last=undefined;pacer.acc=0;
+      if(!pacer.raf)pacer.raf=requestAnimationFrame(stepPace);
+    }
+    updatePacerUI();
+  });
+  p.querySelector(".pace-slower").addEventListener("click",()=>{pacer.speed=Math.max(5,Math.round(pacer.speed*0.72));updatePacerUI();});
+  p.querySelector(".pace-faster").addEventListener("click",()=>{pacer.speed=Math.min(40,Math.round(pacer.speed/0.72));updatePacerUI();});
+});
+["wheel","touchmove"].forEach(ev=>{
+  window.addEventListener(ev,e=>{
+    if(e.target&&e.target.closest&&e.target.closest(".pacer"))return;
+    if(pacer.active&&!pacer.paused){pacer.paused=true;updatePacerUI();}
+  },{passive:true});
+});
+updatePacerUI();
+
+/* ============ wins ============ */
+let winLog=[];
+function renderWins(){
+  const el=document.getElementById("win-log");
+  if(!winLog.length){el.innerHTML='<div class="empty">Your website going live with a working booking link belongs here.</div>';return;}
+  el.innerHTML=winLog.slice(0,30).map(i=>
+    '<div class="logitem"><div class="when">'+i.d+'</div><div class="what">✶ '+esc(i.t)+'</div></div>'
+  ).join("");
+}
+document.getElementById("win-add").addEventListener("click",async()=>{
+  const v=document.getElementById("win-in").value.trim();
+  if(!v) return;
+  winLog.unshift({t:v,d:nowStamp()});
+  await sSet("rachaelvip:wins",winLog);
+  document.getElementById("win-in").value="";
+  renderWins();
+});
+document.getElementById("win-in").addEventListener("keydown",e=>{
+  if(e.key==="Enter") document.getElementById("win-add").click();
+});
+
+const TASKS={
+  o1:[
+    {id:"r1",t:"Connect your Google Calendar to Wix Bookings",s:"In your Wix dashboard, open your Bookings settings and connect your Google Calendar. Booked calls show up on your calendar, and nobody can book on top of a client."},
+    {id:"r2",t:"Set your hours for discovery calls",s:"Only the times your body says yes to. You can block whole days. Fewer, better slots are better than a wide-open calendar you resent."},
+    {id:"r3",t:"Connect Zoom to your booking",s:"Once it's connected, every discovery call makes its own meeting link and sends it in the confirmation. If the setting is hiding, Voxer me a screen recording."},
+    {id:"r4",t:"Test your booking link",s:"It's working now. Book yourself a call like a stranger would. Check that the confirmation email arrives, the call lands on your calendar, and the Zoom link works."},
+    {id:"r5",t:"At the conference, catch what lights you up",s:"People, ideas, workshops, conversations. Voice memo them or add them to your Idea Log. Don't act on any of them yet. Just catch them."}
+  ],
+  o2:[
+    {id:"r6",t:"Make one folder on your desktop",s:"Name it whatever you like, then add the smaller folders from the Your Folder tab in Your Front Door. Two minutes."},
+    {id:"r7",t:"Drop in the trainings and workshops you've taught",s:"Slides, outlines, handwritten notes, photos of a whiteboard. Rough is fine."},
+    {id:"r8",t:"Drop in your meditations and art directives",s:"Recordings, scripts, the prompts you use in session. A phone photo of a written directive counts."},
+    {id:"r9",t:"Read your two doorways out loud",s:"They're in Who It's For. Read each short version and community name aloud, notice the first thing your body does, and Voxer me which one leaned in."}
+  ],
+  o3:[
+    {id:"r10",t:"List a few current couples the workshop could help",s:"Only the ones where your gut says yes when you picture them in the room."},
+    {id:"r11",t:"Invite them personally at your special price",s:"A warm note in your own words, not a flyer. Let them know the weekend is being filmed for your certification, so they can decide with all the details."},
+    {id:"r12",t:"Ask your co-leader to share it with her people",s:"Send her the workshop link once it's live, plus two or three sentences she can copy."},
+    {id:"r13",t:"Send me your email list as a spreadsheet",s:"Ask your old platform for an export file, or ask your husband to help. I'll bring it into Wix so you can tell your people about the workshop."},
+    {id:"r14",t:"One early bird reminder before October 31",s:"A short email or post: the $100 early bird ends October 31. One feeling, one invitation."}
+  ],
+  o4:[
+    {id:"r15",t:"Choose your free gift from your folder",s:"Look at what you gathered and ask your gut which one wants to be the first thing people receive from you. Voxer me your pick."},
+    {id:"r16",t:"Record a two-minute voice memo about why you do this work",s:"No script. Just talk, like you're telling one woman over tea. This becomes the heart of your Start Here welcome."},
+    {id:"r17",t:"Ask your Sacral where your community lives",s:"Skool, where you already are with me, or somewhere else? Log the answer in Check In."},
+    {id:"r18",t:"Add your questions for our next call to the Idea Log",s:"Anything that came up this month, so we start our November call from what's real for you."}
+  ]
+};
+
+let doneSet={};
+const TGROUPS={o:{weeks:["o1","o2","o3","o4"],txt:"prog-txt",fill:"prog-fill"}};
+
+function renderTasks(){
+  Object.keys(TGROUPS).forEach(g=>renderGroup(g));
+}
+function renderGroup(g){
+  const G=TGROUPS[g];
+  let total=0,done=0;
+  G.weeks.forEach(w=>{
+    const el=document.getElementById("tasks-"+w); el.innerHTML="";
+    TASKS[w].forEach(t=>{
+      total++; const d=!!doneSet[t.id]; if(d)done++;
+      const row=document.createElement("div");
+      row.className="task"+(d?" done":""); row.tabIndex=0; row.setAttribute("role","checkbox"); row.setAttribute("aria-checked",d?"true":"false");
+      row.innerHTML='<div class="box">'+(d?"✓":"")+'</div><div><div class="tt">'+esc(t.t)+'</div><div class="ts">'+esc(t.s)+'</div></div>';
+      const toggle=async()=>{ doneSet[t.id]=!doneSet[t.id]; await sSet("rachaelvip:tasks",doneSet); renderTasks(); };
+      row.addEventListener("click",toggle);
+      row.addEventListener("keydown",e=>{ if(e.key===" "||e.key==="Enter"){e.preventDefault();toggle();} });
+      el.appendChild(row);
+    });
+  });
+  document.getElementById(G.txt).textContent=done+" of "+total+" done";
+  document.getElementById(G.fill).style.width=(total?Math.round(done/total*100):0)+"%";
+  if(g==="o"){const tick=document.getElementById("tick-plan"); if(tick) tick.classList.toggle("done",done===total&&total>0);}
+}
+
+/* ============ util & init ============ */
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+(async function init(){
+  sacLog=(await sGet("rachaelvip:sacral"))||[];
+  waveLog=(await sGet("rachaelvip:wave"))||[];
+  winLog=(await sGet("rachaelvip:wins"))||[];
+  ideaLog=(await sGet("rachaelvip:ideas"))||[];
+  sudsState=(await sGet("rachaelvip:suds"))||{};
+  doneSet=(await sGet("rachaelvip:tasks"))||{};
+  renderTasks(); renderSac(); renderWave(); renderWins(); renderIdeas(); initSuds();
+})();
+
+document.querySelectorAll(".stabs").forEach(bar=>{
+  const sec=bar.closest(".view");
+  bar.querySelectorAll(".stab").forEach(b=>b.addEventListener("click",()=>{
+    bar.querySelectorAll(".stab").forEach(x=>x.classList.toggle("on",x===b));
+    sec.querySelectorAll(".subview").forEach(v=>v.classList.toggle("on",v.id===b.dataset.sub));
+    window.scrollTo({top:0,behavior:"smooth"});
+  }));
+});
+</script>
+</body>
+</html>
